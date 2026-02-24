@@ -13,7 +13,7 @@ export interface DraftState {
   status: "not_started" | "in_progress" | "complete";
 }
 
-export const DRAFTER_NAMES = ["Mike", "Joe", "Sarah", "Dan"] as const;
+export const DRAFTER_NAMES = ["Mike", "Daron", "Will", "Cagney"] as const;
 export type DrafterName = (typeof DRAFTER_NAMES)[number];
 
 export const TRIBE_COLORS: Record<string, string> = {

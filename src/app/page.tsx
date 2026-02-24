@@ -10,7 +10,7 @@ import { DRAFTER_NAMES, Player } from "@/lib/types";
 import { getActiveDrafter, getRound } from "@/lib/draft-logic";
 
 export default function Home() {
-  const { players, draftState, loading, randomizeDraftOrder, startDraft, makePick } = useDraft();
+  const { players, draftState, loading, randomizeDraftOrder, startDraft, makePick, resetDraft } = useDraft();
   const [myName, setMyName] = useState<string>("");
   const [pendingPick, setPendingPick] = useState<Player | null>(null);
 
@@ -45,7 +45,21 @@ export default function Home() {
       {/* Top Bar */}
       <header className="bg-white shadow-sm p-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Survivor 50 Fantasy Draft</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold">Survivor 50 Fantasy Draft</h1>
+            {myName === "Mike" && (
+              <button
+                onClick={() => {
+                  if (window.confirm("Reset the entire draft? This clears all picks.")) {
+                    resetDraft();
+                  }
+                }}
+                className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded-lg hover:bg-red-200"
+              >
+                Reset Draft
+              </button>
+            )}
+          </div>
           {draftState.status === "in_progress" ? (
             <div className="text-right">
               <div className="text-2xl font-bold">
