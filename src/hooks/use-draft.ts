@@ -2,13 +2,18 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
-import { Player, DraftState, TOTAL_PLAYERS } from "@/lib/types";
-import { getActiveDrafter } from "@/lib/draft-logic";
+import { Player, DraftState } from "@/lib/types";
+import { getActiveDrafter, isFinalPick } from "@/lib/draft-logic";
 
 export function useDraft() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [draftState, setDraftState] = useState<DraftState | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const refetchPlayers = useCallback(async () => {
+    const { data } = await supabase.from("players").select("*").order("id");
+    if (data) setPlayers(data);
+  }, []);
 
   // Initial fetch
   useEffect(() => {
@@ -37,6 +42,25 @@ export function useDraft() {
           );
         }
       )
+      // A cast swap (e.g. running migrate-to-51.sql) is a DELETE + INSERT, not
+      // an UPDATE. Without this, an open tab keeps showing the OLD cast while
+      // the database holds the new one at the same ids — so a pick would land
+      // on a different castaway than the one clicked. Refetch instead of
+      // patching, since the whole roster has changed.
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "players" },
+        () => {
+          refetchPlayers();
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "players" },
+        () => {
+          refetchPlayers();
+        }
+      )
       .subscribe();
 
     const stateChannel = supabase
@@ -54,7 +78,7 @@ export function useDraft() {
       supabase.removeChannel(playersChannel);
       supabase.removeChannel(stateChannel);
     };
-  }, []);
+  }, [refetchPlayers]);
 
   const randomizeDraftOrder = useCallback(async (names: string[]) => {
     const shuffled = [...names].sort(() => Math.random() - 0.5);
@@ -82,7 +106,8 @@ export function useDraft() {
       if (drafterName !== expectedDrafter) return;
 
       const nextPick = draftState.current_pick + 1;
-      const isComplete = draftState.current_pick >= TOTAL_PLAYERS;
+      // 20 picks, not 21 — one castaway is left undrafted.
+      const isComplete = isFinalPick(draftState.current_pick);
 
       await supabase
         .from("players")

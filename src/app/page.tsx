@@ -6,7 +6,7 @@ import { PreDraft } from "@/components/PreDraft";
 import { AvailablePlayers } from "@/components/AvailablePlayers";
 import { DraftBoard } from "@/components/DraftBoard";
 import { ConfirmModal } from "@/components/ConfirmModal";
-import { DRAFTER_NAMES, Player } from "@/lib/types";
+import { DRAFTER_NAMES, Player, TOTAL_ROUNDS } from "@/lib/types";
 import { getActiveDrafter, getRound } from "@/lib/draft-logic";
 
 export default function Home() {
@@ -46,7 +46,7 @@ export default function Home() {
       <header className="bg-white shadow-sm p-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">Survivor 50 Fantasy Draft</h1>
+            <h1 className="text-2xl font-bold">Survivor 51 Fantasy Draft</h1>
             {myName === "Mike" && (
               <button
                 onClick={() => {
@@ -66,7 +66,7 @@ export default function Home() {
                 {isMyTurn ? "Your Pick!" : `${activeDrafter}'s Pick`}
               </div>
               <div className="text-sm text-gray-500">
-                Round {round} of 6 — Pick #{draftState.current_pick}
+                Round {round} of {TOTAL_ROUNDS} — Pick #{draftState.current_pick}
               </div>
             </div>
           ) : (

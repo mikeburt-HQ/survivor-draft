@@ -1,4 +1,4 @@
-import { Player, TRIBE_COLORS } from "@/lib/types";
+import { Player, getTribeColor } from "@/lib/types";
 
 interface ConfirmModalProps {
   player: Player;
@@ -7,7 +7,7 @@ interface ConfirmModalProps {
 }
 
 export function ConfirmModal({ player, onConfirm, onCancel }: ConfirmModalProps) {
-  const tribeColor = TRIBE_COLORS[player.tribe] || "#6B7280";
+  const tribeColor = getTribeColor(player.tribe);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -17,7 +17,7 @@ export function ConfirmModal({ player, onConfirm, onCancel }: ConfirmModalProps)
           Draft <span className="font-bold">{player.name}</span>?
         </p>
         <p className="text-sm mb-6" style={{ color: tribeColor }}>
-          {player.tribe}
+          {player.tribe ? `${player.tribe} — ${player.hometown}` : player.hometown}
         </p>
         <div className="flex gap-3">
           <button

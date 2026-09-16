@@ -1,4 +1,4 @@
-import { Player, TRIBE_COLORS } from "@/lib/types";
+import { Player, getTribeColor } from "@/lib/types";
 
 interface PlayerCardProps {
   player: Player;
@@ -8,7 +8,7 @@ interface PlayerCardProps {
 
 export function PlayerCard({ player, isMyTurn, onDraft }: PlayerCardProps) {
   const isDrafted = player.drafted_by !== null;
-  const tribeColor = TRIBE_COLORS[player.tribe] || "#6B7280";
+  const tribeColor = getTribeColor(player.tribe);
 
   return (
     <button
@@ -24,7 +24,9 @@ export function PlayerCard({ player, isMyTurn, onDraft }: PlayerCardProps) {
       style={{ borderLeftColor: tribeColor, borderLeftWidth: "4px" }}
     >
       <div className="font-semibold">{player.name}</div>
-      <div className="text-sm text-gray-500">{player.tribe}</div>
+      <div className="text-sm text-gray-500">
+        {player.tribe ? `${player.tribe} — ${player.hometown}` : player.hometown}
+      </div>
       {isDrafted && (
         <div className="text-sm font-medium text-gray-600 mt-1">
           Drafted by {player.drafted_by} (#{player.draft_pick})

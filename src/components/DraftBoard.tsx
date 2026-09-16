@@ -1,4 +1,4 @@
-import { Player, DraftState, TOTAL_ROUNDS, TOTAL_DRAFTERS, TRIBE_COLORS } from "@/lib/types";
+import { Player, DraftState, TOTAL_ROUNDS, TOTAL_DRAFTERS, getTribeColor } from "@/lib/types";
 import { getSnakeIndex } from "@/lib/draft-logic";
 
 interface DraftBoardProps {
@@ -41,7 +41,7 @@ export function DraftBoard({ players, draftState }: DraftBoardProps) {
               <tr key={roundIdx} className="border-t">
                 <td className="p-2 text-sm text-gray-500 text-center">{roundIdx + 1}</td>
                 {row.map((player, colIdx) => {
-                  const tribeColor = player ? TRIBE_COLORS[player.tribe] : undefined;
+                  const tribeColor = player?.tribe ? getTribeColor(player.tribe) : undefined;
                   return (
                     <td
                       key={colIdx}

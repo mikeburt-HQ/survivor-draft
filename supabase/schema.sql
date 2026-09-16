@@ -1,7 +1,9 @@
 CREATE TABLE players (
   id INT PRIMARY KEY,
   name TEXT NOT NULL,
-  tribe TEXT NOT NULL,
+  hometown TEXT NOT NULL,
+  -- Nullable: Survivor 51's tribe split is not announced until the premiere.
+  tribe TEXT,
   drafted_by TEXT,
   draft_pick INT
 );

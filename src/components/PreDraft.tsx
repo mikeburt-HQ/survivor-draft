@@ -16,7 +16,7 @@ export function PreDraft({ draftState, onSelectName, onRandomize, onStart }: Pre
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-8 p-8">
-      <h1 className="text-4xl font-bold">Survivor 50 Fantasy Draft</h1>
+      <h1 className="text-4xl font-bold">Survivor 51 Fantasy Draft</h1>
       <p className="text-lg text-gray-600">Pick your name to join the draft</p>
 
       <div className="flex gap-3">

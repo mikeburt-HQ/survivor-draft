@@ -1,14 +1,23 @@
-INSERT INTO draft_state (id, draft_order, current_pick, status)
-VALUES (1, '[]'::jsonb, 0, 'not_started');
+-- Migrate an existing Survivor 50 draft database to Survivor 51.
+-- Run this ONCE in the Supabase SQL Editor. It replaces the cast entirely and
+-- clears any previous draft, so only run it when you are done with Survivor 50.
+--
+-- For a brand new Supabase project, use schema.sql + seed.sql instead.
 
--- Survivor 51 cast, announced by CBS in August 2026. Premiere 2026-09-23.
--- (Sources disagree on the exact announcement day, 08-25 vs 08-26.)
--- Two starting tribes (purple and yellow) are confirmed, but CBS has not
--- released who is on which tribe, so `tribe` is NULL for everyone. To fill it
--- in later, run e.g.:
---   UPDATE players SET tribe = 'Purple' WHERE id IN (1, 2, 3, ...);
---   UPDATE players SET tribe = 'Yellow' WHERE id IN (4, 5, 6, ...);
--- The app groups by tribe automatically once those values are set.
+BEGIN;
+
+-- 1. Cast members now carry a hometown, and tribe is unknown until the premiere.
+ALTER TABLE players ADD COLUMN IF NOT EXISTS hometown TEXT;
+ALTER TABLE players ALTER COLUMN tribe DROP NOT NULL;
+
+-- 2. Clear the Survivor 50 cast and any picks made against it.
+DELETE FROM players;
+
+-- 3. Survivor 51 cast, announced by CBS in August 2026. Premiere 2026-09-23.
+--    Tribes are NULL because CBS has not released the split yet.
+--    Note: ADD COLUMN appends, so `hometown` ends up LAST here while
+--    schema.sql puts it 3rd. Semantically identical (same type, same
+--    nullability) and harmless because every INSERT names its columns.
 INSERT INTO players (id, name, hometown, tribe) VALUES
 (1,  'Rob Antonson',            'Cumberland, Rhode Island',      NULL),
 (2,  'Brady Booker',            'Knoxville, Tennessee',          NULL),
@@ -31,3 +40,18 @@ INSERT INTO players (id, name, hometown, tribe) VALUES
 (19, 'Aaliyah Puglia',          'Providence, Rhode Island',      NULL),
 (20, 'Ana Sani',                'Toronto, Ontario',              NULL),
 (21, 'Devin Way',               'Los Angeles, California',       NULL);
+
+-- 4. Now that every row has one, make hometown required.
+ALTER TABLE players ALTER COLUMN hometown SET NOT NULL;
+
+-- 5. Reset the draft itself.
+UPDATE draft_state
+SET status = 'not_started', current_pick = 0, draft_order = '[]'::jsonb
+WHERE id = 1;
+
+COMMIT;
+
+-- Sanity check — expect 21 castaways, 0 drafted:
+--   SELECT count(*) AS cast_size,
+--          count(drafted_by) AS drafted
+--   FROM players;
