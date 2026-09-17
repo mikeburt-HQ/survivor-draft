@@ -32,7 +32,7 @@ INSERT INTO players (id, name, hometown, tribe) VALUES
 (11, 'Danny Kilby',             'London, Ontario',               NULL),
 (12, 'Carter Krull',            'Sioux Falls, South Dakota',     NULL),
 (13, 'Alexis Levine',           'Atlanta, Georgia',              NULL),
-(14, 'Angelica "Jelly" Loblack','Bloomington, Indiana',          NULL),
+(14, 'Angelica "Jelly" Loblack', 'Bloomington, Indiana',         NULL),
 (15, 'Eric Macksoud',           'Windsor Locks, Connecticut',    NULL),
 (16, 'Maggie Nestor',           'Charles Town, West Virginia',   NULL),
 (17, 'Thien An Nguyen',         'Fort Worth, Texas',             NULL),
