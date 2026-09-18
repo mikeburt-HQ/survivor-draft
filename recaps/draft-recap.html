@@ -1,0 +1,831 @@
+<title>Survivor 51 Draft Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+  :root {
+    --ground:      #F4F3F7;
+    --surface:     #FFFFFF;
+    --surface-alt: #ECEAF2;
+    --ink:         #191627;
+    --ink-soft:    #4A4560;
+    --ink-faint:   #7B7590;
+    --rule:        #DAD6E4;
+    --rule-strong: #BFB9D0;
+
+    --violet:      #6B3FC4;
+    --gold:        #C98A05;
+    --gold-ink:    #8A5E00;
+
+    --daron:       #6B3FC4;
+    --will:        #1F7A74;
+    --cagney:      #B5502B;
+    --mike:        #2F5EA8;
+
+    --shadow: 0 1px 2px rgba(25,22,39,.06), 0 8px 24px -12px rgba(25,22,39,.18);
+
+    --f-display: "Anton", "Haettenschweiler", "Arial Narrow", sans-serif;
+    --f-body: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #131120;
+      --surface:     #1C1930;
+      --surface-alt: #24203A;
+      --ink:         #F0EEF7;
+      --ink-soft:    #B8B2CC;
+      --ink-faint:   #857EA0;
+      --rule:        #2F2A48;
+      --rule-strong: #453E63;
+
+      --violet:      #A585F0;
+      --gold:        #F0C03C;
+      --gold-ink:    #F0C03C;
+
+      --daron:       #A585F0;
+      --will:        #45BDB3;
+      --cagney:      #E8875C;
+      --mike:        #74A2E8;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #131120;
+    --surface:     #1C1930;
+    --surface-alt: #24203A;
+    --ink:         #F0EEF7;
+    --ink-soft:    #B8B2CC;
+    --ink-faint:   #857EA0;
+    --rule:        #2F2A48;
+    --rule-strong: #453E63;
+
+    --violet:      #A585F0;
+    --gold:        #F0C03C;
+    --gold-ink:    #F0C03C;
+
+    --daron:       #A585F0;
+    --will:        #45BDB3;
+    --cagney:      #E8875C;
+    --mike:        #74A2E8;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 40px 72px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(50px, 12vw, 104px);
+    line-height: .88;
+    letter-spacing: .005em;
+    margin: 0;
+    text-wrap: balance;
+    text-transform: uppercase;
+  }
+
+  h1 .tint { color: var(--violet); }
+
+  .dek {
+    margin: 20px 0 0;
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  .masthead-rule {
+    height: 4px;
+    margin-top: 32px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+      var(--daron) 0 25%, var(--will) 25% 50%,
+      var(--cagney) 50% 75%, var(--mike) 75% 100%);
+  }
+
+  /* ---------- facts ---------- */
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 28px;
+  }
+
+  .fact {
+    background: var(--surface);
+    padding: 16px 18px;
+  }
+
+  .fact dt {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 4px;
+  }
+
+  .fact dd {
+    margin: 0;
+    font-family: var(--f-display);
+    font-size: 30px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fact dd small {
+    font-family: var(--f-body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    margin-left: 6px;
+  }
+
+  /* ---------- sections ---------- */
+
+  section { margin-top: 56px; }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 26px;
+    letter-spacing: .03em;
+    margin: 0 0 6px;
+  }
+
+  .sec-note {
+    margin: 0 0 22px;
+    color: var(--ink-faint);
+    font-size: 14px;
+    max-width: 62ch;
+  }
+
+  /* ---------- team cards ---------- */
+
+  .teams {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .team {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 5px solid var(--accent);
+    border-radius: 10px;
+    padding: 20px 20px 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .team[data-who="Daron"]  { --accent: var(--daron); }
+  .team[data-who="Will"]   { --accent: var(--will); }
+  .team[data-who="Cagney"] { --accent: var(--cagney); }
+  .team[data-who="Mike"]   { --accent: var(--mike); }
+
+  .team-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .team-name {
+    font-family: var(--f-display);
+    font-size: 34px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .team-meta {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: right;
+  }
+
+  .roster { list-style: none; margin: 0; padding: 0; }
+
+  .roster li {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .roster li:last-child { border-bottom: 0; }
+
+  .pick {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    padding-top: 2px;
+  }
+
+  .who-name {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .who-name .age {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    margin-left: 7px;
+  }
+
+  .who-job {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 1px;
+  }
+
+  .who-from {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+
+  /* ---------- board ---------- */
+
+  .board-scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 11px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+
+  thead th {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--rule-strong);
+    font-weight: 600;
+  }
+
+  thead th.c-daron  { color: var(--daron); }
+  thead th.c-will   { color: var(--will); }
+  thead th.c-cagney { color: var(--cagney); }
+  thead th.c-mike   { color: var(--mike); }
+
+  tbody tr:last-child td { border-bottom: 0; }
+
+  .rd {
+    font-family: var(--f-display);
+    font-size: 19px;
+    color: var(--ink-faint);
+    width: 54px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  td .cell-name { font-size: 14px; font-weight: 500; line-height: 1.3; }
+
+  td .cell-pick {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .snake-note {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-top: 12px;
+  }
+
+  /* ---------- notes ---------- */
+
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .note {
+    background: var(--surface);
+    padding: 18px 20px;
+  }
+
+  .note h3 {
+    margin: 0 0 5px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -.005em;
+  }
+
+  .note p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- undrafted ---------- */
+
+  .undrafted {
+    background: var(--surface);
+    border: 1px dashed var(--rule-strong);
+    border-radius: 10px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+
+  .undrafted .tag {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+    white-space: nowrap;
+  }
+
+  .undrafted .body { flex: 1 1 320px; }
+
+  .undrafted .nm {
+    font-family: var(--f-display);
+    font-size: 27px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .undrafted p {
+    margin: 7px 0 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    margin-top: 64px;
+    padding-top: 22px;
+    border-top: 2px solid var(--rule-strong);
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+
+  footer strong { color: var(--ink-soft); }
+
+  @media (max-width: 720px) {
+    .teams, .notes { grid-template-columns: minmax(0, 1fr); }
+    .facts { grid-template-columns: repeat(2, 1fr); }
+    .wrap { padding-block: 30px 56px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Draft night &middot; 17 September 2026</p>
+    <h1>The <span class="tint">Survivor&nbsp;51</span><br>Draft Book</h1>
+    <p class="dek">
+      Four drafters, twenty-one castaways, five snake rounds. Everybody walked away with
+      five names and one castaway never got called. Here is who went where, and who they
+      actually are.
+    </p>
+    <div class="masthead-rule"></div>
+  </header>
+
+  <section>
+    <dl class="facts">
+      <div class="fact">
+        <dt>Drafters</dt>
+        <dd>4</dd>
+      </div>
+      <div class="fact">
+        <dt>Castaways</dt>
+        <dd>21</dd>
+      </div>
+      <div class="fact">
+        <dt>Picks made</dt>
+        <dd>20 <small>5 rounds</small></dd>
+      </div>
+      <div class="fact">
+        <dt>Left on board</dt>
+        <dd>1</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>The Rosters</h2>
+    <p class="sec-note">
+      Listed in the order each drafter took them. Ages and jobs are from the official
+      cast bios; where someone has moved, the second line is where they started and
+      where they live now.
+    </p>
+
+    <div class="teams">
+
+      <article class="team" data-who="Daron">
+        <div class="team-head">
+          <div class="team-name">Daron</div>
+          <div class="team-meta">1st pick &middot; avg age 28.2</div>
+        </div>
+        <ul class="roster">
+          <li>
+            <span class="pick">#1</span>
+            <div>
+              <div class="who-name">Lewis Kelly <span class="age">28</span></div>
+              <div class="who-job">Farmer</div>
+              <div class="who-from">Dublin, Ireland &rarr; Corozal, Puerto Rico</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#8</span>
+            <div>
+              <div class="who-name">Aaliyah Puglia <span class="age">24</span></div>
+              <div class="who-job">Chef</div>
+              <div class="who-from">Gloucester City, NJ &rarr; Providence, RI</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#9</span>
+            <div>
+              <div class="who-name">Patt Cannaday <span class="age">33</span></div>
+              <div class="who-job">Federal prosecutor</div>
+              <div class="who-from">Tampa, FL &rarr; Washington, D.C.</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#16</span>
+            <div>
+              <div class="who-name">Brady Booker <span class="age">27</span></div>
+              <div class="who-job">Pro wrestler</div>
+              <div class="who-from">La Salle, IL &rarr; Knoxville, TN</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#17</span>
+            <div>
+              <div class="who-name">Angelica &ldquo;Jelly&rdquo; Loblack <span class="age">29</span></div>
+              <div class="who-job">Sociology professor</div>
+              <div class="who-from">Garland, TX &rarr; Bloomington, IN</div>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="team" data-who="Will">
+        <div class="team-head">
+          <div class="team-name">Will</div>
+          <div class="team-meta">2nd pick &middot; avg age 31.0</div>
+        </div>
+        <ul class="roster">
+          <li>
+            <span class="pick">#2</span>
+            <div>
+              <div class="who-name">Danny &ldquo;Kilby&rdquo; Kilby <span class="age">30</span></div>
+              <div class="who-job">Game designer</div>
+              <div class="who-from">Mount Forest &rarr; London, Ontario</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#7</span>
+            <div>
+              <div class="who-name">Jenna Doore <span class="age">30</span></div>
+              <div class="who-job">Wedding photographer</div>
+              <div class="who-from">Perrysburg &rarr; Toledo, Ohio</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#10</span>
+            <div>
+              <div class="who-name">Ori Jean-Charles <span class="age">27</span></div>
+              <div class="who-job">Personal trainer</div>
+              <div class="who-from">Spring Valley, NY</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#15</span>
+            <div>
+              <div class="who-name">Sharonda Cox <span class="age">34</span></div>
+              <div class="who-job">OBGYN resident</div>
+              <div class="who-from">Pompano Beach, FL &rarr; Richmond, KY</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#18</span>
+            <div>
+              <div class="who-name">Ana Sani <span class="age">34</span></div>
+              <div class="who-job">Voice actress</div>
+              <div class="who-from">Richmond Hill &rarr; Toronto, Ontario</div>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="team" data-who="Cagney">
+        <div class="team-head">
+          <div class="team-name">Cagney</div>
+          <div class="team-meta">3rd pick &middot; avg age 38.0</div>
+        </div>
+        <ul class="roster">
+          <li>
+            <span class="pick">#3</span>
+            <div>
+              <div class="who-name">Alexis Levine <span class="age">34</span></div>
+              <div class="who-job">Criminal defense attorney</div>
+              <div class="who-from">Atlanta, Georgia</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#6</span>
+            <div>
+              <div class="who-name">Eric Macksoud <span class="age">34</span></div>
+              <div class="who-job">Mental health counselor</div>
+              <div class="who-from">Lincoln, RI &rarr; Windsor Locks, CT</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#11</span>
+            <div>
+              <div class="who-name">Rob Antonson <span class="age">40</span></div>
+              <div class="who-job">Airline gate agent</div>
+              <div class="who-from">Johnston &rarr; Cumberland, Rhode Island</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#14</span>
+            <div>
+              <div class="who-name">Kristin Flickinger <span class="age">49</span></div>
+              <div class="who-job">Crisis management</div>
+              <div class="who-from">Ketchum, ID &rarr; Santa Barbara, CA</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#19</span>
+            <div>
+              <div class="who-name">Devin Way <span class="age">33</span></div>
+              <div class="who-job">Actor</div>
+              <div class="who-from">Lufkin, TX &rarr; Los Angeles, CA</div>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="team" data-who="Mike">
+        <div class="team-head">
+          <div class="team-name">Mike</div>
+          <div class="team-meta">4th pick &middot; avg age 29.0</div>
+        </div>
+        <ul class="roster">
+          <li>
+            <span class="pick">#4</span>
+            <div>
+              <div class="who-name">Carter Krull <span class="age">24</span></div>
+              <div class="who-job">Livestock farmer</div>
+              <div class="who-from">Rock Rapids, IA &rarr; Sioux Falls, SD</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#5</span>
+            <div>
+              <div class="who-name">Mike Pinsky <span class="age">32</span></div>
+              <div class="who-job">Baseball executive</div>
+              <div class="who-from">New York City, New York</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#12</span>
+            <div>
+              <div class="who-name">Maggie Nestor <span class="age">40</span></div>
+              <div class="who-job">Farmer</div>
+              <div class="who-from">Middleway &rarr; Charles Town, West Virginia</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#13</span>
+            <div>
+              <div class="who-name">Linnea Capobianco <span class="age">25</span></div>
+              <div class="who-job">Entrepreneur</div>
+              <div class="who-from">Kearny &rarr; Jersey City, New Jersey</div>
+            </div>
+          </li>
+          <li>
+            <span class="pick">#20</span>
+            <div>
+              <div class="who-name">Thien An Nguyen <span class="age">24</span></div>
+              <div class="who-job">Medical student</div>
+              <div class="who-from">Fort Worth, Texas</div>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>The Board</h2>
+    <p class="sec-note">
+      Snake order, so the round turns back on itself: Daron opened every odd round and
+      Mike closed it, then Mike led off the even ones.
+    </p>
+
+    <div class="board-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Rd</th>
+            <th scope="col" class="c-daron">Daron</th>
+            <th scope="col" class="c-will">Will</th>
+            <th scope="col" class="c-cagney">Cagney</th>
+            <th scope="col" class="c-mike">Mike</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rd">1</td>
+            <td><div class="cell-name">Lewis Kelly</div><div class="cell-pick">#1</div></td>
+            <td><div class="cell-name">Danny Kilby</div><div class="cell-pick">#2</div></td>
+            <td><div class="cell-name">Alexis Levine</div><div class="cell-pick">#3</div></td>
+            <td><div class="cell-name">Carter Krull</div><div class="cell-pick">#4</div></td>
+          </tr>
+          <tr>
+            <td class="rd">2</td>
+            <td><div class="cell-name">Aaliyah Puglia</div><div class="cell-pick">#8</div></td>
+            <td><div class="cell-name">Jenna Doore</div><div class="cell-pick">#7</div></td>
+            <td><div class="cell-name">Eric Macksoud</div><div class="cell-pick">#6</div></td>
+            <td><div class="cell-name">Mike Pinsky</div><div class="cell-pick">#5</div></td>
+          </tr>
+          <tr>
+            <td class="rd">3</td>
+            <td><div class="cell-name">Patt Cannaday</div><div class="cell-pick">#9</div></td>
+            <td><div class="cell-name">Ori Jean-Charles</div><div class="cell-pick">#10</div></td>
+            <td><div class="cell-name">Rob Antonson</div><div class="cell-pick">#11</div></td>
+            <td><div class="cell-name">Maggie Nestor</div><div class="cell-pick">#12</div></td>
+          </tr>
+          <tr>
+            <td class="rd">4</td>
+            <td><div class="cell-name">Brady Booker</div><div class="cell-pick">#16</div></td>
+            <td><div class="cell-name">Sharonda Cox</div><div class="cell-pick">#15</div></td>
+            <td><div class="cell-name">Kristin Flickinger</div><div class="cell-pick">#14</div></td>
+            <td><div class="cell-name">Linnea Capobianco</div><div class="cell-pick">#13</div></td>
+          </tr>
+          <tr>
+            <td class="rd">5</td>
+            <td><div class="cell-name">Angelica Loblack</div><div class="cell-pick">#17</div></td>
+            <td><div class="cell-name">Ana Sani</div><div class="cell-pick">#18</div></td>
+            <td><div class="cell-name">Devin Way</div><div class="cell-pick">#19</div></td>
+            <td><div class="cell-name">Thien An Nguyen</div><div class="cell-pick">#20</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="snake-note">
+      Tribes are not in here because CBS has not released them. They get filled in after
+      the premiere.
+    </p>
+  </section>
+
+  <section>
+    <h2>Things That Happened</h2>
+    <p class="sec-note">
+      Pattern-spotting only &mdash; no takes on who drafted well, and nothing about how any
+      of this plays out.
+    </p>
+
+    <div class="notes">
+      <div class="note">
+        <h3>Will quietly took all of Canada</h3>
+        <p>
+          The cast has exactly two Canadians, Danny Kilby and Ana Sani, both out of Ontario.
+          Will got both &mdash; one with his first pick, one with his last.
+        </p>
+      </div>
+      <div class="note">
+        <h3>Prosecution and defense went separate ways</h3>
+        <p>
+          Cagney took criminal defense attorney Alexis Levine at #3. Daron took federal
+          prosecutor Patt Cannaday at #9. They will be on opposite rosters all season.
+        </p>
+      </div>
+      <div class="note">
+        <h3>Mike cornered the farm vote</h3>
+        <p>
+          Three people in this cast farm for a living. Daron took the Irish one at #1, and
+          Mike took the other two &mdash; livestock farmer Carter Krull and Maggie Nestor.
+        </p>
+      </div>
+      <div class="note">
+        <h3>A full decade separates the rosters</h3>
+        <p>
+          Cagney's five average 38.0, Daron's 28.2. Cagney also holds the oldest castaway in
+          the cast, 49-year-old Kristin Flickinger.
+        </p>
+      </div>
+      <div class="note">
+        <h3>Mike took three of the four youngest</h3>
+        <p>
+          Carter Krull and Thien An Nguyen are both 24, Linnea Capobianco is 25. The only
+          other castaway under 26 is Aaliyah Puglia, who went to Daron.
+        </p>
+      </div>
+      <div class="note">
+        <h3>Rhode Island reports to Cagney</h3>
+        <p>
+          Both castaways who grew up in Rhode Island &mdash; Eric Macksoud and Rob Antonson
+          &mdash; landed on the same roster. Mike also drafted a Mike at #5.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Left On The Board</h2>
+    <div class="undrafted">
+      <div class="tag">Undrafted</div>
+      <div class="body">
+        <div class="nm">Cristian Chavez</div>
+        <p>
+          26, head of HR, Salt Lake City. Twenty-one castaways into twenty picks means
+          exactly one goes unclaimed, and he is it. Nobody owns him.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Season premiere: Tuesday 23 September, 8/7c on CBS.</strong>
+      Two starting tribes, purple and yellow, and one castaway who does not begin the game
+      with everyone else. Tribe assignments are announced at the premiere.
+    </p>
+    <p>
+      Weekly recaps start after episode one. Rosters above are final as drafted on
+      17 September 2026.
+    </p>
+  </footer>
+
+</div>

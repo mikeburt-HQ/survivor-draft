@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Survivor 51 Draft Recap</title>
+<meta name="description" content="Four drafters, twenty-one castaways, one guy nobody wanted.">
+<meta property="og:title" content="Survivor 51 Draft Recap">
+<meta property="og:description" content="Four drafters, twenty-one castaways, one guy nobody wanted.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground:#F4F3F7; --surface:#FFFFFF; --surface-alt:#ECEAF2;
+    --ink:#191627; --ink-soft:#4A4560; --ink-faint:#7B7590;
+    --rule:#DAD6E4; --rule-strong:#BFB9D0;
+    --violet:#6B3FC4; --gold-ink:#8A5E00;
+    --daron:#6B3FC4; --will:#1F7A74; --cagney:#B5502B; --mike:#2F5EA8;
+    --shadow:0 1px 2px rgba(25,22,39,.06), 0 8px 24px -12px rgba(25,22,39,.18);
+    --f-display:"Anton","Haettenschweiler","Arial Narrow",sans-serif;
+    --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#131120; --surface:#1C1930; --surface-alt:#24203A;
+      --ink:#F0EEF7; --ink-soft:#B8B2CC; --ink-faint:#857EA0;
+      --rule:#2F2A48; --rule-strong:#453E63;
+      --violet:#A585F0; --gold-ink:#F0C03C;
+      --daron:#A585F0; --will:#45BDB3; --cagney:#E8875C; --mike:#74A2E8;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#131120; --surface:#1C1930; --surface-alt:#24203A;
+    --ink:#F0EEF7; --ink-soft:#B8B2CC; --ink-faint:#857EA0;
+    --rule:#2F2A48; --rule-strong:#453E63;
+    --violet:#A585F0; --gold-ink:#F0C03C;
+    --daron:#A585F0; --will:#45BDB3; --cagney:#E8875C; --mike:#74A2E8;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--f-body); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  img { max-width:100%; }
+
+  .wrap { max-width:680px; margin:0 auto; padding-inline:20px; padding-block:40px 64px; }
+
+  .eyebrow {
+    font-family:var(--f-mono); font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--gold-ink); margin:0 0 14px;
+  }
+  h1 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(46px,11vw,84px); line-height:.9; letter-spacing:.005em;
+    margin:0; text-wrap:balance;
+  }
+  h1 .tint { color:var(--violet); }
+  .standfirst {
+    margin:18px 0 0; font-size:19px; color:var(--ink-soft); max-width:60ch;
+  }
+  .rule {
+    height:4px; margin:30px 0 40px; border-radius:2px;
+    background:linear-gradient(90deg,var(--daron) 0 25%,var(--will) 25% 50%,var(--cagney) 50% 75%,var(--mike) 75% 100%);
+  }
+
+  .story p { margin:0 0 22px; }
+  .story p:last-child { margin-bottom:0; }
+
+  h2 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:27px; letter-spacing:.03em; line-height:1;
+    margin:38px 0 14px; color:var(--who,var(--ink));
+  }
+  h2:first-child { margin-top:0; }
+  h2 .slot {
+    font-family:var(--f-mono); font-size:11px; font-weight:600;
+    letter-spacing:.1em; color:var(--ink-faint); margin-left:10px;
+    text-transform:uppercase;
+  }
+  .s-daron  { --who:var(--daron); }
+  .s-will   { --who:var(--will); }
+  .s-cagney { --who:var(--cagney); }
+  .s-mike   { --who:var(--mike); }
+
+  .kicker {
+    margin:44px 0 0; padding:22px 24px;
+    background:var(--surface); border:1px solid var(--rule);
+    border-left:5px solid var(--violet); border-radius:10px;
+    box-shadow:var(--shadow);
+  }
+  .kicker h3 {
+    margin:0 0 8px; font-size:16px; font-weight:600;
+  }
+  .kicker p { margin:0; color:var(--ink-soft); font-size:16px; }
+
+  .orphan {
+    margin-top:20px; padding:22px 24px;
+    background:var(--surface); border:1px dashed var(--rule-strong);
+    border-radius:10px;
+  }
+  .orphan .tag {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-ink); margin:0 0 6px;
+  }
+  .orphan .nm {
+    font-family:var(--f-display); font-size:26px; text-transform:uppercase; line-height:1;
+  }
+  .orphan p { margin:8px 0 0; color:var(--ink-soft); font-size:16px; }
+
+  details.rosters {
+    margin-top:44px; background:var(--surface);
+    border:1px solid var(--rule); border-radius:10px; overflow:hidden;
+  }
+  details.rosters > summary {
+    cursor:pointer; padding:16px 20px; list-style:none;
+    font-family:var(--f-mono); font-size:11px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint);
+    background:var(--surface-alt);
+  }
+  details.rosters > summary::-webkit-details-marker { display:none; }
+  details.rosters > summary:focus-visible { outline:2px solid var(--violet); outline-offset:-2px; }
+  details.rosters > summary::after { content:" +"; }
+  details.rosters[open] > summary::after { content:" \2212"; }
+
+  .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; background:var(--rule); }
+  .col { background:var(--surface); padding:18px 20px; }
+  .col h4 {
+    margin:0 0 10px; font-family:var(--f-display); font-weight:400;
+    text-transform:uppercase; font-size:20px; line-height:1; color:var(--who,var(--ink));
+  }
+  .col ul { margin:0; padding:0; list-style:none; }
+  .col li {
+    font-size:14px; padding:5px 0; color:var(--ink-soft);
+    border-bottom:1px solid var(--rule);
+  }
+  .col li:last-child { border-bottom:0; }
+  .col li b { color:var(--ink); font-weight:600; }
+  .col li .pk {
+    font-family:var(--f-mono); font-size:11px; color:var(--ink-faint);
+    margin-right:7px; font-variant-numeric:tabular-nums;
+  }
+
+  footer {
+    margin-top:48px; padding-top:20px; border-top:2px solid var(--rule-strong);
+    color:var(--ink-faint); font-size:14px;
+  }
+  footer strong { color:var(--ink-soft); }
+  footer a { color:var(--violet); }
+
+  @media (max-width:600px) {
+    body { font-size:16px; }
+    .grid { grid-template-columns:minmax(0,1fr); }
+    .wrap { padding-block:30px 52px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Draft night &middot; 17 September 2026</p>
+    <h1>Twenty-one names,<br><span class="tint">twenty</span> picks</h1>
+    <p class="standfirst">
+      Four drafters went through the Survivor 51 cast on Wednesday night. Here is how
+      it actually went.
+    </p>
+    <div class="rule"></div>
+  </header>
+
+  <div class="story">
+
+    <h2 class="s-daron">Daron <span class="slot">1st pick</span></h2>
+    <p>
+      Daron had first pick and immediately took an Irish farmer who lives in Puerto Rico,
+      which is either a power move or a man drafting purely on vibes. He spent the rest of
+      the night assembling chaos: a federal prosecutor, a professional wrestler, a chef and
+      a sociology professor. Somewhere between a courtroom and a bar fight.
+    </p>
+
+    <h2 class="s-will">Will <span class="slot">2nd pick</span></h2>
+    <p>
+      Will drafted Canada. Both Canadians in this cast &mdash; a game designer and a voice
+      actress &mdash; and he took one with his very first pick and the other with his very
+      last, like he had been saving a seat. Round that out with a wedding photographer, a
+      personal trainer and an OBGYN resident and he has comfortably the most functional
+      group chat of the four.
+    </p>
+
+    <h2 class="s-cagney">Cagney <span class="slot">3rd pick</span></h2>
+    <p>
+      Cagney decided to draft adults. His five average 38 years old, a full decade older
+      than Daron's, and include a crisis manager, a mental health counselor and a criminal
+      defense attorney. If anything goes wrong on that beach, that man is staffed for it.
+      He also took the oldest person in the cast, 49-year-old Kristin, and somehow both
+      Rhode Islanders.
+    </p>
+
+    <h2 class="s-mike">Mike <span class="slot">4th pick</span></h2>
+    <p>
+      Mike went the opposite direction and drafted a farm with a youth movement attached.
+      Two of the three farmers out there, plus three of the four youngest people in the
+      cast &mdash; nobody on his roster is over 32 except Maggie, who is 40 and, naturally,
+      also a farmer. He also drafted a guy named Mike, which we are all choosing to believe
+      was strategic.
+    </p>
+
+  </div>
+
+  <div class="kicker">
+    <h3>Best subplot of the night</h3>
+    <p>
+      Daron has the federal prosecutor. Cagney has the criminal defense attorney. Those two
+      have never met and are already on opposite sides.
+    </p>
+  </div>
+
+  <div class="orphan">
+    <p class="tag">Undrafted</p>
+    <div class="nm">Cristian Chavez</div>
+    <p>
+      26, head of HR. Twenty-one castaways, twenty picks, and this group collectively
+      decided it would rather not get called into HR. Brutal.
+    </p>
+  </div>
+
+  <details class="rosters">
+    <summary>Full rosters, if you have forgotten already</summary>
+    <div class="grid">
+
+      <div class="col s-daron">
+        <h4>Daron</h4>
+        <ul>
+          <li><span class="pk">#1</span><b>Lewis Kelly</b>, 28 &mdash; farmer</li>
+          <li><span class="pk">#8</span><b>Aaliyah Puglia</b>, 24 &mdash; chef</li>
+          <li><span class="pk">#9</span><b>Patt Cannaday</b>, 33 &mdash; federal prosecutor</li>
+          <li><span class="pk">#16</span><b>Brady Booker</b>, 27 &mdash; pro wrestler</li>
+          <li><span class="pk">#17</span><b>Jelly Loblack</b>, 29 &mdash; sociology professor</li>
+        </ul>
+      </div>
+
+      <div class="col s-will">
+        <h4>Will</h4>
+        <ul>
+          <li><span class="pk">#2</span><b>Danny Kilby</b>, 30 &mdash; game designer</li>
+          <li><span class="pk">#7</span><b>Jenna Doore</b>, 30 &mdash; wedding photographer</li>
+          <li><span class="pk">#10</span><b>Ori Jean-Charles</b>, 27 &mdash; personal trainer</li>
+          <li><span class="pk">#15</span><b>Sharonda Cox</b>, 34 &mdash; OBGYN resident</li>
+          <li><span class="pk">#18</span><b>Ana Sani</b>, 34 &mdash; voice actress</li>
+        </ul>
+      </div>
+
+      <div class="col s-cagney">
+        <h4>Cagney</h4>
+        <ul>
+          <li><span class="pk">#3</span><b>Alexis Levine</b>, 34 &mdash; defense attorney</li>
+          <li><span class="pk">#6</span><b>Eric Macksoud</b>, 34 &mdash; mental health counselor</li>
+          <li><span class="pk">#11</span><b>Rob Antonson</b>, 40 &mdash; airline gate agent</li>
+          <li><span class="pk">#14</span><b>Kristin Flickinger</b>, 49 &mdash; crisis management</li>
+          <li><span class="pk">#19</span><b>Devin Way</b>, 33 &mdash; actor</li>
+        </ul>
+      </div>
+
+      <div class="col s-mike">
+        <h4>Mike</h4>
+        <ul>
+          <li><span class="pk">#4</span><b>Carter Krull</b>, 24 &mdash; livestock farmer</li>
+          <li><span class="pk">#5</span><b>Mike Pinsky</b>, 32 &mdash; baseball executive</li>
+          <li><span class="pk">#12</span><b>Maggie Nestor</b>, 40 &mdash; farmer</li>
+          <li><span class="pk">#13</span><b>Linnea Capobianco</b>, 25 &mdash; entrepreneur</li>
+          <li><span class="pk">#20</span><b>Thien An Nguyen</b>, 24 &mdash; medical student</li>
+        </ul>
+      </div>
+
+    </div>
+  </details>
+
+  <footer>
+    <p>
+      <strong>Premiere: Tuesday 23 September, 8/7c on CBS.</strong>
+      Two starting tribes, purple and yellow, and one castaway who does not begin the game
+      with everyone else. Tribes get revealed at the premiere.
+    </p>
+    <p>The draft board lives at <a href="/">survivor-draft.vercel.app</a>.</p>
+  </footer>
+
+</div>
+</body>
+</html>
