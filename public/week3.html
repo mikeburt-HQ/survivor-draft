@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Survivor 51 Week Three</title>
+<meta name="description" content="Episode 3: one castaway finally got out of the game, and one missed a boat.">
+<meta property="og:title" content="Survivor 51 Week Three">
+<meta property="og:description" content="Episode 3: one castaway finally got out of the game, and one missed a boat.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground:#F4F3F7; --surface:#FFFFFF; --surface-alt:#ECEAF2;
+    --ink:#191627; --ink-soft:#4A4560; --ink-faint:#7B7590;
+    --rule:#DAD6E4; --rule-strong:#BFB9D0;
+    --violet:#6B3FC4; --gold-ink:#8A5E00;
+    --savu:#6B3FC4; --toka:#C08A00;
+    --savu-wash:#EFE9FB; --toka-wash:#FBF2DA;
+    --out:#B03030;
+    --daron:#6B3FC4; --will:#1F7A74; --cagney:#B5502B; --mike:#2F5EA8;
+    --shadow:0 1px 2px rgba(25,22,39,.06), 0 8px 24px -12px rgba(25,22,39,.18);
+    --f-display:"Anton","Haettenschweiler","Arial Narrow",sans-serif;
+    --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#131120; --surface:#1C1930; --surface-alt:#24203A;
+      --ink:#F0EEF7; --ink-soft:#B8B2CC; --ink-faint:#857EA0;
+      --rule:#2F2A48; --rule-strong:#453E63;
+      --violet:#A585F0; --gold-ink:#F0C03C;
+      --savu:#A585F0; --toka:#F0C03C;
+      --savu-wash:#2A2247; --toka-wash:#3A3018;
+      --out:#F08080;
+      --daron:#A585F0; --will:#45BDB3; --cagney:#E8875C; --mike:#74A2E8;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#131120; --surface:#1C1930; --surface-alt:#24203A;
+    --ink:#F0EEF7; --ink-soft:#B8B2CC; --ink-faint:#857EA0;
+    --rule:#2F2A48; --rule-strong:#453E63;
+    --violet:#A585F0; --gold-ink:#F0C03C;
+    --savu:#A585F0; --toka:#F0C03C;
+    --savu-wash:#2A2247; --toka-wash:#3A3018;
+    --out:#F08080;
+    --daron:#A585F0; --will:#45BDB3; --cagney:#E8875C; --mike:#74A2E8;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--f-body); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  img { max-width:100%; }
+  .wrap { max-width:720px; margin:0 auto; padding-inline:20px; padding-block:40px 64px; }
+
+  .eyebrow {
+    font-family:var(--f-mono); font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--gold-ink); margin:0 0 14px;
+  }
+  h1 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(44px,10.5vw,80px); line-height:.9; margin:0; text-wrap:balance;
+  }
+  h1 .tint { color:var(--violet); }
+  .standfirst { margin:18px 0 0; font-size:19px; color:var(--ink-soft); max-width:60ch; }
+  .rule {
+    height:4px; margin:30px 0 0; border-radius:2px;
+    background:linear-gradient(90deg,var(--daron) 0 25%,var(--will) 25% 50%,var(--cagney) 50% 75%,var(--mike) 75% 100%);
+  }
+
+  h2 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:26px; letter-spacing:.03em; line-height:1; margin:46px 0 6px;
+  }
+  .sec-note { margin:0 0 18px; color:var(--ink-faint); font-size:14px; max-width:62ch; }
+  .story p { margin:0 0 20px; }
+  .story p:last-child { margin-bottom:0; }
+
+  .standings { display:grid; gap:1px; background:var(--rule);
+               border:1px solid var(--rule); border-radius:10px; overflow:hidden; }
+  .row {
+    display:grid; grid-template-columns:118px 1fr auto; gap:14px; align-items:center;
+    background:var(--surface); padding:14px 18px;
+  }
+  .row .who {
+    font-family:var(--f-display); font-size:25px; line-height:1;
+    text-transform:uppercase; color:var(--c);
+  }
+  .r-daron  { --c:var(--daron); }
+  .r-will   { --c:var(--will); }
+  .r-cagney { --c:var(--cagney); }
+  .r-mike   { --c:var(--mike); }
+  .bar { display:flex; gap:4px; flex-wrap:wrap; }
+  .pip {
+    width:22px; height:22px; border-radius:5px; display:grid; place-items:center;
+    font-family:var(--f-mono); font-size:10px; font-weight:600;
+  }
+  .pip.savu { background:var(--savu-wash); color:var(--savu); }
+  .pip.toka { background:var(--toka-wash); color:var(--toka); }
+  .pip.gone { background:transparent; color:var(--out); border:1px dashed var(--out); }
+  .count {
+    font-family:var(--f-display); font-size:27px; line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .count small {
+    display:block; font-family:var(--f-mono); font-size:9px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
+    margin-top:3px;
+  }
+  .legend {
+    margin-top:12px; font-size:13px; color:var(--ink-faint);
+    display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .swatch {
+    display:inline-block; width:11px; height:11px; border-radius:3px;
+    margin-right:6px; vertical-align:-1px;
+  }
+  .sw-savu { background:var(--savu); }
+  .sw-toka { background:var(--toka); }
+
+  .kicker {
+    margin:24px 0 0; padding:22px 24px; background:var(--surface);
+    border:1px solid var(--rule); border-left:5px solid var(--violet);
+    border-radius:10px; box-shadow:var(--shadow);
+  }
+  .kicker h3 { margin:0 0 8px; font-size:16px; font-weight:600; }
+  .kicker p { margin:0; color:var(--ink-soft); font-size:16px; }
+
+  .gone-box {
+    margin-top:22px; padding:22px 24px; background:var(--surface);
+    border:1px dashed var(--out); border-radius:10px;
+  }
+  .gone-box + .gone-box { margin-top:14px; }
+  .gone-box .tag {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--out); margin:0 0 6px;
+  }
+  .gone-box .nm {
+    font-family:var(--f-display); font-size:27px; text-transform:uppercase; line-height:1;
+  }
+  .gone-box p { margin:8px 0 0; color:var(--ink-soft); font-size:16px; }
+
+  .tbl-scroll { overflow-x:auto; }
+  table {
+    width:100%; border-collapse:collapse; margin-top:4px; background:var(--surface);
+    border:1px solid var(--rule); border-radius:10px; overflow:hidden;
+  }
+  th, td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule); font-size:14px; }
+  thead th {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-faint); background:var(--surface-alt);
+  }
+  tbody tr:last-child td { border-bottom:0; }
+  td .owner { font-family:var(--f-mono); font-size:11px; color:var(--ink-faint); }
+  .chip {
+    display:inline-block; font-family:var(--f-mono); font-size:10px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:20px;
+  }
+  .chip.savu { background:var(--savu-wash); color:var(--savu); }
+  .chip.toka { background:var(--toka-wash); color:var(--toka); }
+  .chip.moved { background:var(--toka-wash); color:var(--toka); outline:1px dashed var(--toka); }
+  .struck { text-decoration:line-through; color:var(--ink-faint); }
+
+  footer {
+    margin-top:52px; padding-top:20px; border-top:2px solid var(--rule-strong);
+    color:var(--ink-faint); font-size:14px;
+  }
+  footer strong { color:var(--ink-soft); }
+  footer a { color:var(--violet); }
+
+  @media (max-width:600px) {
+    body { font-size:16px; }
+    .row { grid-template-columns:96px 1fr auto; gap:10px; padding:12px 14px; }
+    .row .who { font-size:21px; }
+    .wrap { padding-block:30px 52px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Week three &middot; Episode 3, aired 7 October</p>
+    <h1>He finally got<br>out of the game.<br><span class="tint">Just not</span> that way.</h1>
+    <p class="standfirst">
+      Two castaways left in one episode and only one of them was voted out. Somebody missed a
+      boat and changed tribes by accident. And Mike is still the only drafter who has not lost
+      a soul.
+    </p>
+    <div class="rule"></div>
+  </header>
+
+  <h2>Standings</h2>
+  <p class="sec-note">Castaways still in the game, and which tribe each of them is on now.</p>
+
+  <div class="standings">
+    <div class="row r-mike">
+      <div class="who">Mike</div>
+      <div class="bar">
+        <span class="pip savu" title="Linnea Capobianco — Savu">S</span>
+        <span class="pip toka" title="Carter Krull — Toka (moved from Savu in episode 3)">T</span>
+        <span class="pip toka" title="Mike Pinsky — Toka">T</span>
+        <span class="pip toka" title="Maggie Nestor — Toka">T</span>
+        <span class="pip toka" title="Thien An Nguyen — Toka">T</span>
+      </div>
+      <div class="count">5<small>left</small></div>
+    </div>
+    <div class="row r-will">
+      <div class="who">Will</div>
+      <div class="bar">
+        <span class="pip savu" title="Ori Jean-Charles — Savu">S</span>
+        <span class="pip savu" title="Sharonda Cox — Savu">S</span>
+        <span class="pip toka" title="Danny Kilby — Toka">T</span>
+        <span class="pip toka" title="Jenna Doore — Toka">T</span>
+        <span class="pip gone" title="Ana Sani — voted out, episode 2">&times;</span>
+      </div>
+      <div class="count">4<small>left</small></div>
+    </div>
+    <div class="row r-cagney">
+      <div class="who">Cagney</div>
+      <div class="bar">
+        <span class="pip savu" title="Alexis Levine — Savu">S</span>
+        <span class="pip savu" title="Eric Macksoud — Savu">S</span>
+        <span class="pip savu" title="Kristin Flickinger — Savu">S</span>
+        <span class="pip toka" title="Devin Way — Toka">T</span>
+        <span class="pip gone" title="Rob Antonson — quit, episode 3">Q</span>
+      </div>
+      <div class="count">4<small>left</small></div>
+    </div>
+    <div class="row r-daron">
+      <div class="who">Daron</div>
+      <div class="bar">
+        <span class="pip toka" title="Lewis Kelly — Toka">T</span>
+        <span class="pip toka" title="Brady Booker — Toka">T</span>
+        <span class="pip toka" title="Angelica Loblack — Toka">T</span>
+        <span class="pip gone" title="Aaliyah Puglia — voted out, episode 1">&times;</span>
+        <span class="pip gone" title="Patt Cannaday — voted out, episode 3">&times;</span>
+      </div>
+      <div class="count">3<small>left</small></div>
+    </div>
+  </div>
+
+  <p class="legend">
+    <span><span class="swatch sw-savu"></span>Savu (purple)</span>
+    <span><span class="swatch sw-toka"></span>Toka (yellow)</span>
+    <span>&times; voted out</span>
+    <span>Q quit</span>
+  </p>
+
+  <div class="story">
+
+    <h2>Rob Antonson got what he wanted</h2>
+    <p>
+      Last week a producer had to interrupt Rob Antonson in the voting booth to explain that you
+      cannot vote for yourself. This week Rob left anyway.
+    </p>
+    <p>
+      He had hurt a foot days earlier and hidden it. He slept alone on the beach after Tribal
+      while his tribemates openly doubted the injury. The medic looked, found a cut, and said it
+      was not enough to pull him from the game. Rob asked whether it could get infected. The
+      doctor said anything can. Rob went home on day six, and Jeff Probst was careful to say he
+      was not being removed &mdash; he was choosing to go.
+    </p>
+    <p>
+      He is Cagney's, which means Cagney's roster has now produced a rule clarification and a
+      voluntary exit in consecutive weeks. He also never played the immunity idol he was carrying.
+      Keep hold of that fact for about four paragraphs.
+    </p>
+
+    <h2>Carter Krull missed the boat. Literally.</h2>
+    <p>
+      The episode sent one castaway from each tribe to visit the other. Devin Way went from Toka
+      to Savu, found a hidden advantage in the form of a secret extra vote, and caught his ride
+      home. Carter Krull went from Savu to Toka, was still off searching for an advantage when
+      the boat left, and therefore became a member of Toka.
+    </p>
+    <p>
+      Not a mutiny. Not a strategic defection. He was simply not there when the boat went. Carter
+      is Mike's, so Mike's roster relocated a man across the map by being slightly too thorough.
+    </p>
+    <p>
+      And this is where Rob's unplayed idol went: Carter is holding it. One roster lost a player
+      and his idol in the same episode, and the idol crossed to a different roster entirely.
+    </p>
+
+    <h2>Daron is down to three</h2>
+    <p>
+      Toka lost immunity and went to Tribal, where Patt Cannaday was voted out after Thien An
+      Nguyen worked the players outside the main alliance. Patt is Daron's &mdash; and Patt is the
+      one who tipped Jenna Doore off in week one, which is what redirected that vote onto Daron's
+      Aaliyah Puglia in the first place.
+    </p>
+    <p>
+      So both of Daron's losses trace back through the same person, and now that person is gone
+      too. She has three left, all on Toka, and she still holds Jelly Loblack's idol.
+    </p>
+
+    <h2>Mike has not lost anybody, and holds half the hardware</h2>
+    <p>
+      Three weeks in, three drafters have taken a casualty and Mike has taken none. All five picks
+      are intact. Two of the four advantages known to be in play belong to Mike's castaways:
+      Carter's inherited idol, and an advantage Maggie Nestor found hidden in Carter's own bag,
+      which she agreed to use jointly with Brady Booker.
+    </p>
+    <p>
+      Meanwhile Cristian Chavez, still undrafted, is still on Savu and has now outlasted four
+      people who were actually selected.
+    </p>
+
+  </div>
+
+  <h2>Hardware watch</h2>
+  <p class="sec-note">Advantages known to be in play at the end of episode 3.</p>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr><th>Holder</th><th>Drafted by</th><th>What it is</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Angelica &ldquo;Jelly&rdquo; Loblack</td><td><span class="owner">Daron</span></td><td>Hidden immunity idol, found in episode 2</td></tr>
+        <tr><td>Carter Krull</td><td><span class="owner">Mike</span></td><td>Hidden immunity idol &mdash; Rob's, never played</td></tr>
+        <tr><td>Maggie Nestor</td><td><span class="owner">Mike</span></td><td>Advantage found in Carter's bag, to be used with Brady Booker</td></tr>
+        <tr><td>Devin Way</td><td><span class="owner">Cagney</span></td><td>Secret extra vote, found on the Savu visit</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="gone-box">
+    <p class="tag">Quit &middot; Episode 3, day 6</p>
+    <div class="nm">Rob Antonson</div>
+    <p>
+      Airline gate agent, 40, Savu &mdash; drafted 11th by Cagney. Medically cleared to continue
+      and left anyway, one week after trying to vote himself out.
+    </p>
+  </div>
+
+  <div class="gone-box">
+    <p class="tag">Voted out &middot; Episode 3</p>
+    <div class="nm">Patt Cannaday</div>
+    <p>
+      Federal prosecutor, 33, Toka &mdash; drafted 9th by Daron. Targeted once Thien An Nguyen
+      pulled in the players outside the alliance.
+    </p>
+  </div>
+
+  <h2>Who owns whom</h2>
+  <p class="sec-note">The full board after episode 3. Carter Krull has changed tribes.</p>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr><th>Castaway</th><th>Tribe</th><th>Drafted by</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Linnea Capobianco</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Cristian Chavez</td><td><span class="chip savu">Savu</span></td><td><span class="owner">&mdash; undrafted</span></td></tr>
+        <tr><td>Sharonda Cox</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Kristin Flickinger</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td>Ori Jean-Charles</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Alexis Levine</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td>Eric Macksoud</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td>Brady Booker</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Daron</span></td></tr>
+        <tr><td>Jenna Doore</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Lewis Kelly</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Daron</span></td></tr>
+        <tr><td>Danny Kilby</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Carter Krull</td><td><span class="chip moved">Toka &rarr;</span></td><td><span class="owner">Mike &mdash; moved from Savu</span></td></tr>
+        <tr><td>Angelica &ldquo;Jelly&rdquo; Loblack</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Daron</span></td></tr>
+        <tr><td>Maggie Nestor</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Thien An Nguyen</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Mike Pinsky</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Devin Way</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td class="struck">Aaliyah Puglia</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Daron &mdash; out ep 1</span></td></tr>
+        <tr><td class="struck">Ana Sani</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Will &mdash; out ep 2</span></td></tr>
+        <tr><td class="struck">Rob Antonson</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Cagney &mdash; quit ep 3</span></td></tr>
+        <tr><td class="struck">Patt Cannaday</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Daron &mdash; out ep 3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>
+      <strong>Next episode: Wednesday, 8/7c on CBS.</strong>
+      Savu 7, Toka 10 going into week four. Seventeen still in the game, four known advantages
+      out there.
+    </p>
+    <p>
+      <a href="/week2.html">Week two</a> &middot; <a href="/week1.html">week one</a>
+      &middot; <a href="/recap.html">the draft recap</a> &middot; the live board is at
+      <a href="/">survivor-draft.vercel.app</a>.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
