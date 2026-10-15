@@ -43,3 +43,7 @@ Screenshot 2026-02-24 113110.png
 
 # Supabase CLI local state
 supabase/.temp/
+
+# python bytecode from the recap helper scripts
+__pycache__/
+*.pyc

@@ -23,18 +23,19 @@ export const DRAFTER_NAMES = ["Mike", "Daron", "Will", "Cagney"] as const;
 export type DrafterName = (typeof DRAFTER_NAMES)[number];
 
 /**
- * Survivor 51 starts with two tribes. CBS confirmed the buff colors but has
- * not published the tribe NAMES or who is on which tribe, so every player's
- * `tribe` is null for now.
+ * Survivor 51 started with two tribes — Savu (Purple) and Toka (Yellow) — and
+ * episode 4 split them into three by adding Dina (Red).
  *
- * Keys are colors because the names are not known yet. Real Survivor tribes
- * have proper names (Survivor 50 used "Cila (Orange)"), so once the names
- * land you can write either "Purple" or "Kalo (Purple)" — getTribeColor
- * matches on the color word anywhere in the string, case-insensitively.
+ * Keys are COLOR words, not tribe names, so a label must carry its color:
+ * write "Dina (Red)", not "Dina". getTribeColor matches the color word
+ * anywhere in the string, case-insensitively; a label with no known color
+ * word falls back to NO_TRIBE_COLOR, which is the same gray as "no tribe at
+ * all" and therefore reads as missing data rather than as a new tribe.
  */
 export const TRIBE_COLORS: Record<string, string> = {
   Purple: "#8B5CF6",
   Yellow: "#EAB308",
+  Red: "#DC2626",
 };
 
 /** Neutral gray for a castaway with no tribe, or a tribe we have no color for. */

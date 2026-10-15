@@ -158,4 +158,25 @@ describe("getTribeColor", () => {
   test("unknown tribe → neutral gray, not a crash", () => {
     expect(getTribeColor("Lagi")).toBe(NO_TRIBE_COLOR);
   });
+
+  // Episode 4 split the two starting tribes into three by adding Dina (Red).
+  // Each live label is asserted by NAME, so a label losing its color word --
+  // the one mistake that renders a real tribe as "no tribe" -- fails here.
+  test.each([
+    ["Savu (Purple)", "Purple"],
+    ["Toka (Yellow)", "Yellow"],
+    ["Dina (Red)", "Red"],
+  ])("%s resolves to the %s buff, not gray", (label, color) => {
+    expect(getTribeColor(label)).toBe(TRIBE_COLORS[color]);
+    expect(getTribeColor(label)).not.toBe(NO_TRIBE_COLOR);
+  });
+
+  test("a tribe label stripped of its color word goes gray", () => {
+    expect(getTribeColor("Dina")).toBe(NO_TRIBE_COLOR);
+  });
+
+  test("the three live tribes have three distinct colors", () => {
+    const live = ["Savu (Purple)", "Toka (Yellow)", "Dina (Red)"].map(getTribeColor);
+    expect(new Set(live).size).toBe(3);
+  });
 });
