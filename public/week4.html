@@ -89,7 +89,7 @@
   .standings { display:grid; gap:1px; background:var(--rule);
                border:1px solid var(--rule); border-radius:10px; overflow:hidden; }
   .row {
-    display:grid; grid-template-columns:118px 1fr auto; gap:14px; align-items:center;
+    display:grid; grid-template-columns:118px 1fr auto auto; gap:14px; align-items:center;
     background:var(--surface); padding:14px 18px;
   }
   .row .who {
@@ -117,6 +117,11 @@
     display:block; font-family:var(--f-mono); font-size:9px; font-weight:600;
     letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
     margin-top:3px;
+  }
+  /* Votes taken sits beside the headline number, deliberately quieter. */
+  .count.vcount {
+    font-size:21px; color:var(--ink-faint); min-width:34px;
+    padding-left:14px; border-left:1px solid var(--rule);
   }
   .legend {
     margin-top:12px; font-size:13px; color:var(--ink-faint);
@@ -206,8 +211,9 @@
   }
   @media (max-width:600px) {
     body { font-size:16px; }
-    .row { grid-template-columns:96px 1fr auto; gap:10px; padding:12px 14px; }
+    .row { grid-template-columns:84px 1fr auto auto; gap:8px; padding:12px 14px; }
     .row .who { font-size:21px; }
+    .count.vcount { font-size:18px; padding-left:8px; min-width:28px; }
     .wrap { padding-block:30px 52px; }
   }
 </style>
@@ -227,7 +233,7 @@
   </header>
 
   <h2>Standings</h2>
-  <p class="sec-note">Castaways still in the game, and which of the three tribes each one is on now.</p>
+  <p class="sec-note">Castaways still in the game, which of the three tribes each one is on now, and how many votes have been cast against that team across all four Tribal Councils &mdash; the full ledger is at <a href="/votes.html">votes</a>.</p>
 
   <div class="standings">
     <div class="row r-mike">
@@ -240,6 +246,7 @@
         <span class="pip dina" title="Linnea Capobianco &mdash; Dina">D</span>
       </div>
       <div class="count">5<small>left</small></div>
+      <div class="count vcount">0<small>votes</small></div>
     </div>
     <div class="row r-cagney">
       <div class="who">Cagney</div>
@@ -251,6 +258,7 @@
         <span class="pip gone" title="Rob Antonson &mdash; quit, episode 3">Q</span>
       </div>
       <div class="count">4<small>left</small></div>
+      <div class="count vcount">5<small>votes</small></div>
     </div>
     <div class="row r-daron">
       <div class="who">Daron</div>
@@ -262,6 +270,7 @@
         <span class="pip gone" title="Patt Cannaday &mdash; voted out, episode 3">&times;</span>
       </div>
       <div class="count">3<small>left</small></div>
+      <div class="count vcount">12<small>votes</small></div>
     </div>
     <div class="row r-will">
       <div class="who">Will</div>
@@ -273,6 +282,7 @@
         <span class="pip gone" title="Jenna Doore &mdash; voted out, episode 4">&times;</span>
       </div>
       <div class="count">3<small>left</small></div>
+      <div class="count vcount">17<small>votes</small></div>
     </div>
   </div>
 
@@ -357,20 +367,20 @@
       devil you know against the devil you don't.
     </p>
     <p>
-      Jenna is Will's third loss in four episodes, which takes him level with Daron on three. She
-      was also the castaway who got tipped off in week one and swung that whole vote, so the person
+      Jenna is Will's third loss in four episodes, which leaves Will level with Daron on three.
+      Jenna was also the castaway who got tipped off in week one and swung that whole vote, so the person
       who redirected episode one and the person who did the tipping have now both gone, in
       consecutive episodes, from the same two rosters.
     </p>
     <p>
-      Jelly went into that Tribal holding an immunity idol and did not need to use it. She still
-      has it.
+      Jelly went into that Tribal holding an immunity idol and did not need to use it, and is
+      still carrying it.
     </p>
 
     <h2>Cristian Chavez is still here</h2>
     <p>
       The one castaway nobody drafted landed on Dina, won immunity with them, and has now outlasted
-      five people who were actually picked. He is beating two of the four drafters on his own.
+      five people who were actually picked. Cristian is beating two of the four drafters alone.
     </p>
 
   </div>
@@ -400,8 +410,8 @@
     <div class="nm">Jenna Doore</div>
     <p>
       Wedding photographer, 30, Toledo, Ohio &mdash; drafted 7th by Will, and the fourth castaway voted out.
-      Fifth to leave overall, because Rob Antonson quit rather than being voted out. The vote count
-      is left out here: three sources give three different tallies.
+      Fifth to leave overall, because Rob Antonson quit rather than being voted out. Voted out 4&ndash;1,
+      with the single vote on the other side cast by Jenna, against Alexis Levine.
     </p>
   </div>
 
@@ -442,10 +452,10 @@
     <p>
       <strong>Next episode: Wednesday, 8/7c on CBS.</strong>
       Toka 6, Dina 6, Savu 4 going into week five. Sixteen still in the game, four known
-      advantages out there, and one undrafted man quietly outlasting everybody's mistakes.
+      advantages out there, and one undrafted castaway quietly outlasting everybody's mistakes.
     </p>
     <p>
-      <a href="/week3.html">Week three</a> &middot; <a href="/week2.html">week two</a>
+      <a href="/votes.html">The vote ledger</a> &middot; <a href="/week3.html">week three</a> &middot; <a href="/week2.html">week two</a>
       &middot; <a href="/week1.html">week one</a> &middot;
       <a href="/recap.html">the draft recap</a> &middot; the live board is at
       <a href="/">survivor-draft.vercel.app</a>.

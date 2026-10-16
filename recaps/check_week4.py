@@ -182,14 +182,95 @@ for raw_h, chip in hw:
               f"hardware: {nm} chip {chip!r}, expected {SHORT[alive_tribe[nm]]!r}")
 
 # --- 5. omissions actually stayed omitted ---------------------------------
+# The 4-1 tally WAS on this list and has come off: it is now carried by
+# Wikipedia's vote table, TVLine and Yahoo's results piece, and it reconciles
+# against the five people who could vote. See recaps/vote_history.py. The
+# live-blog "unanimous" stays banned, because it was simply wrong.
 flat = norm(page)
-for banned, why in [
-    (r"\b4\s*[-–]\s*1\b", "a 4-1 vote count (three sources, three tallies)"),
-    (r"\bunanimous\b", "the word unanimous (sources conflict on the tally)"),
+OMISSIONS = [
+    (r"\bunanimous\b", "the word unanimous (a live blog got this wrong)"),
     (r"blood\s*ring", "the Blood Ring, which is teased for a LATER episode"),
     (r"\bwhale\b", "the mini-whale idol by name (holder unconfirmed)"),
-]:
+]
+for banned, why in OMISSIONS:
     check(not re.search(banned, flat, re.I), f"page mentions {why}")
+
+# --- 5b. the tally is now STATED, and in the right place ------------------
+spec_vh = importlib.util.spec_from_file_location(
+    "vote_history", pathlib.Path(__file__).parent / "vote_history.py")
+vh = importlib.util.module_from_spec(spec_vh)
+_stdout, sys.stdout = sys.stdout, io.StringIO()
+try:
+    spec_vh.loader.exec_module(vh)
+finally:
+    sys.stdout = _stdout
+
+ep4 = next(t for t in vh.TRIBALS if t["ep"] == 4)
+boot = max(ep4["votes"], key=ep4["votes"].get)
+runner = min(ep4["votes"], key=ep4["votes"].get)
+want_tally = f"{ep4['votes'][boot]}-{ep4['votes'][runner]}"
+
+gone_box = norm(section("class=\"gone-box\"", ">Who owns whom<"))
+check(boot in gone_box, f"the gone box should name {boot}")
+# Dash-tolerant: the page sets the tally with an &ndash;, and norm() here
+# deliberately does NOT fold dashes, because name parsing splits on em dash.
+check(re.search(rf"{ep4['votes'][boot]}\s*[-–—]\s*{ep4['votes'][runner]}",
+                gone_box),
+      f"gone box should state the tally as {want_tally}; reads: {gone_box[-170:]}")
+check(runner in gone_box,
+      f"gone box should name {runner} as taking the other vote")
+check(ep4["votes"][runner] == 1 and "single vote" in gone_box,
+      "gone box should describe one vote on the other side")
+
+# --- 5c. votes-taken column matches the ledger ----------------------------
+received = {}
+for t in vh.TRIBALS:
+    for n, v in t["votes"].items():
+        received[n] = received.get(n, 0) + v
+vh_owner = {n: d for d, picks in vh.DRAFT.items() for n in picks}
+votes_by_drafter = {d: 0 for d in vh.DRAFT}
+for n, v in received.items():
+    votes_by_drafter[vh_owner[n]] += v
+
+for who in w4.DRAFT:
+    m = re.search(
+        r"<div class=\"row r-" + who.lower() + r"\">.*?"
+        r"<div class=\"count vcount\">(\d+)<small>votes</small>",
+        standings, re.S)
+    check(m is not None, f"{who} standings row has no votes-taken cell")
+    if m:
+        check(int(m.group(1)) == votes_by_drafter[who],
+              f"{who} votes-taken reads {m.group(1)}, "
+              f"expected {votes_by_drafter[who]}")
+
+check("/votes.html" in section("<footer>", "</footer>"),
+      "footer should link the vote ledger")
+check((ROOT / "public" / "votes.html").exists(),
+      "week4 links /votes.html but the file does not exist")
+
+# --- 5d. no gendered pronouns for anyone whose pronouns are unstated ------
+# Daron is she/her; no castaway's pronouns have been stated anywhere, and
+# this page is read by three other people. "one undrafted man" shipped live
+# about Cristian Chavez before this gate existed.
+def strip_tags(chunk):
+    return norm(re.sub(r"<[^>]+>", " ", chunk))
+
+
+prose = strip_tags(section("<body>"))
+slips = re.findall(r"\b(he|him|his|himself|man|woman|men|women)\b", prose, re.I)
+check(not slips,
+      f"page uses gendered pronouns for people whose pronouns are not "
+      f"stated: {sorted(set(w.lower() for w in slips))}")
+
+# Daron is she/her, so she/her is not banned outright -- but it must appear
+# ONLY inside Daron's own section. A "she" anywhere else is a castaway or
+# another drafter being assigned pronouns nobody has stated.
+FEM = r"\b(she|her|hers|herself)\b"
+daron_sec = strip_tags(section(">Daron drew one of each<", "<h2>Will lost"))
+here, allowed = re.findall(FEM, prose, re.I), re.findall(FEM, daron_sec, re.I)
+check(len(here) == len(allowed) and allowed,
+      f"page has {len(here)} she/her, {len(allowed)} of them in Daron's "
+      f"section; every one must be about Daron")
 
 # --- 6. headline claims must be derivable from the data -------------------
 untouched = [w for w, picks in w4.DRAFT.items()
@@ -222,5 +303,7 @@ if fail:
         print(f" - {f}")
     sys.exit(1)
 
-print(f"PASS  {len(rows)} board rows, 4 standings rows, {len(found_cards)} tribe cards, "
-      f"{len(holders)} advantages, {len(w4.alive)} alive, 4 omissions held")
+print(f"PASS  {len(rows)} board rows, {len(w4.DRAFT)} standings rows, "
+      f"{len(found_cards)} tribe cards, {len(holders)} advantages, "
+      f"{len(w4.alive)} alive, {len(OMISSIONS)} omissions held, "
+      f"tally {want_tally} stated, no stray pronouns")

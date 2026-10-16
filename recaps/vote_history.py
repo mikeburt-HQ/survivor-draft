@@ -173,6 +173,9 @@ for t in TRIBALS:
     # every reported attendance one short of the truth.
     attending = frozenset(pop[tribe])
     eligible = len(attending) - len(t["no_vote"])
+    # Published on the page, so it is recorded here rather than recomputed
+    # by any consumer: one derivation, one number.
+    t["_attending"] = len(attending)
     cast_votes = sum(t["votes"].values())
 
     assert cast_votes == eligible, (
