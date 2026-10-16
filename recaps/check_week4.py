@@ -58,15 +58,30 @@ alive_tribe = {n: t for t, roster in w4.TRIBES.items()
 
 
 def section(start, end=None):
-    """Slice the raw page between two headings so sibling tables can't collide."""
+    """Slice the raw page between two headings so sibling tables can't collide.
+
+    A MISSING marker is reported as a named failure, not raised: a traceback
+    exits non-zero without evaluating any check, so it reads like a broken
+    tool rather than a page defect. Removing the vote ledger heading used to
+    crash this file at the board-table slice.
+    """
+    if start not in page:
+        check(False, f"page is missing the section marker {start!r}")
+        return ""
     i = page.index(start)
-    j = page.index(end) if end else len(page)
+    if end is not None and end not in page:
+        check(False, f"page is missing the section marker {end!r}; "
+                     f"slicing {start!r} to the end of the file instead")
+        return page[i:]
+    j = page.index(end, i) if end else len(page)
     assert i < j, f"{start!r} does not precede {end!r}"
     return page[i:j]
 
 
 # --- 1. the "who owns whom" table: tribe chip + owner for all 21 -----------
-board = section(">Who owns whom<")
+# Bounded at the vote ledger: that section carries its own table, and an
+# unbounded slice to EOF would put both tables in front of one regex.
+board = section(">Who owns whom<", ">Vote ledger<")
 rows = re.findall(
     r"<tr><td(?P<cls>[^>]*)>(?P<name>[^<]+)</td>"
     r"<td><span class=\"chip (?P<chip>\w+)\">[^<]*</span></td>"
@@ -243,10 +258,15 @@ for who in w4.DRAFT:
               f"{who} votes-taken reads {m.group(1)}, "
               f"expected {votes_by_drafter[who]}")
 
-check("/votes.html" in section("<footer>", "</footer>"),
-      "footer should link the vote ledger")
-check((ROOT / "public" / "votes.html").exists(),
-      "week4 links /votes.html but the file does not exist")
+# The ledger lives in this page now, not at /votes.html, so the standings
+# note points at the in-page anchor and nothing may link the deleted page.
+check('<h2 id="votes">' in page, "the vote ledger section is missing")
+check('href="#votes"' in standings,
+      "the standings note should link down to the ledger")
+check("/votes.html" not in page,
+      "page still links /votes.html, which no longer exists")
+check(not (ROOT / "public" / "votes.html").exists(),
+      "public/votes.html still exists; the ledger was moved into this page")
 
 # --- 5d. no gendered pronouns for anyone whose pronouns are unstated ------
 # Daron is she/her; no castaway's pronouns have been stated anywhere, and
