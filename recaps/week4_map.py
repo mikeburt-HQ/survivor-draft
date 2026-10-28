@@ -7,8 +7,16 @@ independent sources (Paramount+, TVLine, Inside Survivor) which agree exactly.
 Deliberately OMITTED, because sources disagree:
   - the vote count. TVLine says 4-1, Inside Survivor and Surviving Tribal say
     unanimous, Paramount+ says Jenna 3 / Alexis 1. Three answers, so no count.
-  - the mini-whale idol handed to the second-place tribe: only one source
-    mentions it and does not confirm who received it.
+  - who holds the season's SECOND hidden immunity idol, which Jeff revealed
+    this episode to be a baby whale. No source says where it is hidden or that
+    anyone has found it.
+    CORRECTED 2026-10-28: this entry used to read "the mini-whale idol handed
+    to the second-place tribe", which conflated two separate things and was
+    wrong. Second place won a PITCHER OF ICED COFFEE (Wikipedia and Yahoo's
+    live recap both quote Probst: a full coffee kit for first, a pitcher of
+    iced coffee for second). The baby whale is the design of the next hidden
+    idol, shown at the challenge, and was never handed to a tribe. Both pages
+    carried the wrong version for two weeks.
 Deliberately EXCLUDED as unaired: the "Blood Ring" teased for a later episode.
 
 Names are the exact `players.name` spellings from supabase/seed.sql, so the

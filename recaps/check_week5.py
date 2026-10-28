@@ -273,19 +273,35 @@ for raw_nm, body in boxes:
           f"{nm} was the {ORD[place[nm]]} voted out; box reads: {txt[:110]}")
 
 # --- 6. omissions actually stayed omitted ---------------------------------
-# The ep-4 tally came OFF this list once it was settled. These three are still
-# genuinely unsettled or unaired, and each says in one line why it is benign
-# to suppress: the whale idol's holder is named by nobody, the revote tally is
-# arithmetically impossible, and "unanimous" was simply wrong when printed.
+# The ep-4 tally came OFF this list once it was settled, and so did the baby
+# whale -- see the positional check below. Each entry says in one line why it
+# is benign to suppress: the revote tally is arithmetically impossible, and
+# "unanimous" was simply wrong both times it was printed.
 flat = norm(page)
 OMISSIONS = [
-    (r"\bwhale\b", "the mini-whale idol by name (holder still unconfirmed)"),
     (r"\bunanimous\b", "the word unanimous (printed wrongly twice this season)"),
     (r"revote[^.]{0,40}4\s*[-–]\s*4",
      "a 4-4 revote tally, which cannot happen with four voters"),
 ]
 for banned, why in OMISSIONS:
     check(not re.search(banned, flat, re.I), f"page mentions {why}")
+
+# The baby whale is the design of the season's SECOND hidden immunity idol,
+# shown at the episode-4 challenge. Naming it is fine; ATTRIBUTING it to a
+# holder is not. So it belongs in the note and must stay out of the holders
+# table. A blanket ban on the word stood here until 2026-10-28, which is how
+# the page carried a wrong description of it for two weeks instead of the
+# right one: second place won iced coffee, and the whale was never handed out.
+check("<div class=\"tbl-scroll\">" in hardware,
+      "the hardware section should contain a holders table")
+if "<div class=\"tbl-scroll\">" in hardware:
+    cut = hardware.index("<div class=\"tbl-scroll\">")
+    hw_note, hw_table = norm(hardware[:cut]), norm(hardware[cut:])
+    check("whale" in hw_note.lower(),
+          "the hardware note should say the second idol is a baby whale")
+    check("whale" not in hw_table.lower(),
+          "the baby whale appears in the holders table, which attributes an "
+          "idol nobody is known to hold")
 
 # Episode 6 airs the evening this page ships, so nothing from it may appear.
 for banned in [r"\bepisode 6\b", r"\bI Love Crying\b"]:

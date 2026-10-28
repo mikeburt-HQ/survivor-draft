@@ -210,8 +210,26 @@ flat = norm(page)
 OMISSIONS = [
     (r"\bunanimous\b", "the word unanimous (a live blog got this wrong)"),
     (r"blood\s*ring", "the Blood Ring, which is teased for a LATER episode"),
-    (r"\bwhale\b", "the mini-whale idol by name (holder unconfirmed)"),
 ]
+
+# The baby whale is the design of the season's SECOND hidden immunity idol,
+# shown at the episode-4 challenge. Naming it is fine and now correct; what
+# must never happen is ATTRIBUTING it to a holder. So it belongs in the note
+# above the table and must stay out of the holders table itself. A blanket ban
+# on the word used to stand here, which is why the page carried a wrong
+# description of it for two weeks instead of the right one.
+check("<div class=\"tbl-scroll\">" in hardware,
+      "the hardware section should contain a holders table")
+if "<div class=\"tbl-scroll\">" in hardware:
+    cut = hardware.index("<div class=\"tbl-scroll\">")
+    hw_note, hw_table = norm(hardware[:cut]), norm(hardware[cut:])
+    check("whale" in hw_note.lower(),
+          "the hardware note should say the second idol is a baby whale")
+    check("whale" not in hw_table.lower(),
+          "the baby whale appears in the holders table, which attributes an "
+          "idol nobody is known to hold")
+    check("iced coffee" in hw_note.lower(),
+          "the note should say second place won iced coffee, not an idol")
 for banned, why in OMISSIONS:
     check(not re.search(banned, flat, re.I), f"page mentions {why}")
 
