@@ -7,16 +7,27 @@ independent sources (Paramount+, TVLine, Inside Survivor) which agree exactly.
 Deliberately OMITTED, because sources disagree:
   - the vote count. TVLine says 4-1, Inside Survivor and Surviving Tribal say
     unanimous, Paramount+ says Jenna 3 / Alexis 1. Three answers, so no count.
-  - who holds the season's SECOND hidden immunity idol, which Jeff revealed
-    this episode to be a baby whale. No source says where it is hidden or that
-    anyone has found it.
-    CORRECTED 2026-10-28: this entry used to read "the mini-whale idol handed
-    to the second-place tribe", which conflated two separate things and was
-    wrong. Second place won a PITCHER OF ICED COFFEE (Wikipedia and Yahoo's
-    live recap both quote Probst: a full coffee kit for first, a pitcher of
-    iced coffee for second). The baby whale is the design of the next hidden
-    idol, shown at the challenge, and was never handed to a tribe. Both pages
-    carried the wrong version for two weeks.
+Nothing is omitted on the idol front any more. SETTLED 2026-10-28 by Mike,
+who watched it, after this file got it wrong TWICE:
+
+  The baby-whale idol was SECOND PLACE'S IMMUNITY TOKEN. Three tribes and one
+  Tribal Council, so the top two finishers were both safe. Dina took first (a
+  coffee kit); Toka took second, and second place's immunity arrived as the
+  baby-whale idol plus a pitcher of iced coffee. It meant Toka skipped that
+  week's vote. It was spent on the night and nobody retained it, so it is NOT
+  an advantage in play and must never appear in a holders table.
+
+  Wrong version 1 (shipped, two weeks): "the mini-whale idol handed to the
+  second-place tribe: only one source mentions it and does not confirm who
+  received it" -- treated a spent tribe token as retained hardware with an
+  unknown owner.
+  Wrong version 2 (shipped for an hour): "the season's second hidden immunity
+  idol ... nothing says where it is hidden or that anyone has found it" --
+  read Yahoo's "the second immunity idol for the season is a baby whale" as
+  the second HIDDEN idol, when it meant the idol for SECOND PLACE. Every
+  source fits the right reading: Paramount+ calls it "a mini-whale idol
+  introduced for the second-place winners", and one recap says second place
+  won "iced coffee and safety from the upcoming vote".
 Deliberately EXCLUDED as unaired: the "Blood Ring" teased for a later episode.
 
 Names are the exact `players.name` spellings from supabase/seed.sql, so the

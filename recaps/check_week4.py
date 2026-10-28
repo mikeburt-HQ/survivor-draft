@@ -212,24 +212,34 @@ OMISSIONS = [
     (r"blood\s*ring", "the Blood Ring, which is teased for a LATER episode"),
 ]
 
-# The baby whale is the design of the season's SECOND hidden immunity idol,
-# shown at the episode-4 challenge. Naming it is fine and now correct; what
-# must never happen is ATTRIBUTING it to a holder. So it belongs in the note
-# above the table and must stay out of the holders table itself. A blanket ban
-# on the word used to stand here, which is why the page carried a wrong
-# description of it for two weeks instead of the right one.
+# The baby whale was SECOND PLACE'S IMMUNITY TOKEN: Toka's for one night, and
+# spent the moment Toka skipped the vote. Two wrong descriptions have shipped
+# (see week4_map.py), so these checks guard the STRUCTURE rather than a word.
+# A blanket ban on "whale" stood here first and was the worst option of all --
+# it let a wrong description live forever while failing the right one.
 check("<div class=\"tbl-scroll\">" in hardware,
       "the hardware section should contain a holders table")
 if "<div class=\"tbl-scroll\">" in hardware:
     cut = hardware.index("<div class=\"tbl-scroll\">")
     hw_note, hw_table = norm(hardware[:cut]), norm(hardware[cut:])
     check("whale" in hw_note.lower(),
-          "the hardware note should say the second idol is a baby whale")
+          "the hardware note should account for the baby-whale idol")
     check("whale" not in hw_table.lower(),
-          "the baby whale appears in the holders table, which attributes an "
-          "idol nobody is known to hold")
+          "the baby whale is in the holders table; it was a spent tribe "
+          "token and was never held by anyone")
+    check("second place" in hw_note.lower(),
+          "the note must tie the whale to SECOND PLACE, or it reads as a "
+          "hidden idol again")
     check("iced coffee" in hw_note.lower(),
-          "the note should say second place won iced coffee, not an idol")
+          "the note should name the iced coffee that came with second place")
+    SPENT = ("nobody kept", "covered that", "one night", "spent")
+    check(any(w in hw_note.lower() for w in SPENT),
+          f"the note must say the whale was not retained; expected one of "
+          f"{SPENT} in: {hw_note[:150]}")
+
+# Model-level guard: no advantage may ever BE the whale.
+check(not any("whale" in str(v).lower() for v in w4.ADVANTAGES.values()),
+      "an entry in ADVANTAGES describes the whale, which was never held")
 for banned, why in OMISSIONS:
     check(not re.search(banned, flat, re.I), f"page mentions {why}")
 
