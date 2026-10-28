@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Survivor 51 Week Five</title>
+<meta name="description" content="Episode 5: two Tribal Councils, two castaways gone, and the first drafter to lose nobody finally lost somebody.">
+<meta property="og:title" content="Survivor 51 Week Five">
+<meta property="og:description" content="Episode 5: two Tribal Councils, two castaways gone, and a 4-4 tie that nearly went to rocks.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground:#F4F3F7; --surface:#FFFFFF; --surface-alt:#ECEAF2;
+    --ink:#191627; --ink-soft:#4A4560; --ink-faint:#7B7590;
+    --rule:#DAD6E4; --rule-strong:#BFB9D0;
+    --violet:#6B3FC4; --gold-ink:#8A5E00;
+    --savu:#6B3FC4; --toka:#C08A00; --dina:#C62828;
+    --savu-wash:#EFE9FB; --toka-wash:#FBF2DA; --dina-wash:#FBE6E6;
+    --out:#8A8398;
+    --daron:#6B3FC4; --will:#1F7A74; --cagney:#B5502B; --mike:#2F5EA8;
+    --shadow:0 1px 2px rgba(25,22,39,.06), 0 8px 24px -12px rgba(25,22,39,.18);
+    --f-display:"Anton","Haettenschweiler","Arial Narrow",sans-serif;
+    --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#131120; --surface:#1C1930; --surface-alt:#24203A;
+      --ink:#F0EEF7; --ink-soft:#B8B2CC; --ink-faint:#857EA0;
+      --rule:#2F2A48; --rule-strong:#453E63;
+      --violet:#A585F0; --gold-ink:#F0C03C;
+      --savu:#A585F0; --toka:#F0C03C; --dina:#FF8B8B;
+      --savu-wash:#2A2247; --toka-wash:#3A3018; --dina-wash:#3C1E22;
+      --out:#8C84A4;
+      --daron:#A585F0; --will:#45BDB3; --cagney:#E8875C; --mike:#74A2E8;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#131120; --surface:#1C1930; --surface-alt:#24203A;
+    --ink:#F0EEF7; --ink-soft:#B8B2CC; --ink-faint:#857EA0;
+    --rule:#2F2A48; --rule-strong:#453E63;
+    --violet:#A585F0; --gold-ink:#F0C03C;
+    --savu:#A585F0; --toka:#F0C03C; --dina:#FF8B8B;
+    --savu-wash:#2A2247; --toka-wash:#3A3018; --dina-wash:#3C1E22;
+    --out:#8C84A4;
+    --daron:#A585F0; --will:#45BDB3; --cagney:#E8875C; --mike:#74A2E8;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--f-body); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  img { max-width:100%; }
+  .wrap { max-width:720px; margin:0 auto; padding-inline:20px; padding-block:40px 64px; }
+
+  .eyebrow {
+    font-family:var(--f-mono); font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--gold-ink); margin:0 0 14px;
+  }
+  h1 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(44px,10.5vw,80px); line-height:.9; margin:0; text-wrap:balance;
+  }
+  h1 .tint { color:var(--violet); }
+  .standfirst { margin:18px 0 0; font-size:19px; color:var(--ink-soft); max-width:60ch; }
+  .rule {
+    height:4px; margin:30px 0 0; border-radius:2px;
+    background:linear-gradient(90deg,var(--daron) 0 25%,var(--will) 25% 50%,var(--cagney) 50% 75%,var(--mike) 75% 100%);
+  }
+
+  h2 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:26px; letter-spacing:.03em; line-height:1; margin:46px 0 6px;
+  }
+  .sec-note { margin:0 0 18px; color:var(--ink-faint); font-size:14px; max-width:62ch; }
+  .story p { margin:0 0 20px; }
+  .story p:last-child { margin-bottom:0; }
+
+  .standings { display:grid; gap:1px; background:var(--rule);
+               border:1px solid var(--rule); border-radius:10px; overflow:hidden; }
+  .row {
+    display:grid; grid-template-columns:118px 1fr auto auto; gap:14px; align-items:center;
+    background:var(--surface); padding:14px 18px;
+  }
+  .row .who {
+    font-family:var(--f-display); font-size:25px; line-height:1;
+    text-transform:uppercase; color:var(--c);
+  }
+  .r-daron  { --c:var(--daron); }
+  .r-will   { --c:var(--will); }
+  .r-cagney { --c:var(--cagney); }
+  .r-mike   { --c:var(--mike); }
+  .bar { display:flex; gap:4px; flex-wrap:wrap; }
+  .pip {
+    width:22px; height:22px; border-radius:5px; display:grid; place-items:center;
+    font-family:var(--f-mono); font-size:10px; font-weight:600;
+  }
+  .pip.savu { background:var(--savu-wash); color:var(--savu); }
+  .pip.toka { background:var(--toka-wash); color:var(--toka); }
+  .pip.dina { background:var(--dina-wash); color:var(--dina); }
+  .pip.gone { background:transparent; color:var(--out); border:1px dashed var(--out); }
+  .count {
+    font-family:var(--f-display); font-size:27px; line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .count small {
+    display:block; font-family:var(--f-mono); font-size:9px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
+    margin-top:3px;
+  }
+  /* Votes taken sits beside the headline number, deliberately quieter. */
+  .count.vcount {
+    font-size:21px; color:var(--ink-faint); min-width:34px;
+    padding-left:14px; border-left:1px solid var(--rule);
+  }
+
+  /* --- vote ledger ------------------------------------------------------ */
+  .row.vrow { grid-template-columns:118px 1fr auto; }
+  .track {
+    height:22px; border-radius:5px; background:var(--surface-alt);
+    overflow:hidden; display:flex; align-items:center;
+  }
+  .fill { height:100%; background:var(--c); border-radius:5px 0 0 5px; }
+  .none-yet {
+    font-family:var(--f-mono); font-size:10px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); padding-left:8px;
+  }
+  .tribals { display:grid; gap:14px; grid-template-columns:repeat(2,1fr); margin-top:4px; }
+  .tc {
+    background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+    border-top:5px solid var(--tc); padding:16px 18px; box-shadow:var(--shadow);
+  }
+  .tc.savu { --tc:var(--savu); }
+  .tc.toka { --tc:var(--toka); }
+  .tc h3 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:22px; line-height:1; margin:0 0 2px; color:var(--tc);
+  }
+  .tc .n {
+    font-family:var(--f-mono); font-size:10px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); margin:0 0 12px;
+  }
+  .tc ul { margin:0; padding:0; list-style:none; font-size:14px; }
+  .tc li {
+    padding:6px 0; border-top:1px solid var(--rule);
+    display:flex; justify-content:space-between; gap:10px; align-items:baseline;
+  }
+  .tc li:first-child { border-top:0; }
+  .tc li .nm span { display:block; font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); }
+  .tc li .v {
+    font-family:var(--f-display); font-size:21px; line-height:1;
+    font-variant-numeric:tabular-nums; flex:none;
+  }
+  .tc li.boot .v { color:var(--out); }
+  .tc li.boot .nm { text-decoration:line-through; color:var(--ink-faint); }
+  .tc .ft { margin:12px 0 0; font-size:13px; color:var(--ink-soft); }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .chip.in  { background:var(--savu-wash); color:var(--savu); }
+  .chip.out { background:var(--surface-alt); color:var(--ink-faint); }
+  .legend {
+    margin-top:12px; font-size:13px; color:var(--ink-faint);
+    display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .swatch {
+    display:inline-block; width:11px; height:11px; border-radius:3px;
+    margin-right:6px; vertical-align:-1px;
+  }
+  .sw-savu { background:var(--savu); }
+  .sw-toka { background:var(--toka); }
+  .sw-dina { background:var(--dina); }
+
+  .kicker {
+    margin:24px 0 0; padding:22px 24px; background:var(--surface);
+    border:1px solid var(--rule); border-left:5px solid var(--violet);
+    border-radius:10px; box-shadow:var(--shadow);
+  }
+  .kicker h3 { margin:0 0 8px; font-size:16px; font-weight:600; }
+  .kicker p { margin:0; color:var(--ink-soft); font-size:16px; }
+
+  .tribe-cards { display:grid; gap:14px; grid-template-columns:repeat(3,1fr); margin-top:4px; }
+  .tcard {
+    background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+    border-top:5px solid var(--tc); padding:16px 18px; box-shadow:var(--shadow);
+  }
+  .tcard.savu { --tc:var(--savu); }
+  .tcard.toka { --tc:var(--toka); }
+  .tcard.dina { --tc:var(--dina); }
+  .tcard h3 {
+    font-family:var(--f-display); font-weight:400; text-transform:uppercase;
+    font-size:22px; line-height:1; margin:0 0 2px; color:var(--tc);
+  }
+  .tcard .n {
+    font-family:var(--f-mono); font-size:10px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); margin:0 0 12px;
+  }
+  .tcard ul { margin:0; padding:0; list-style:none; font-size:14px; }
+  .tcard li { padding:4px 0; border-top:1px solid var(--rule); }
+  .tcard li:first-child { border-top:0; }
+  .tcard li span { display:block; font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); }
+
+  .gone-box {
+    margin-top:22px; padding:22px 24px; background:var(--surface);
+    border:1px dashed var(--rule-strong); border-radius:10px;
+  }
+  .gone-box .tag {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-faint); margin:0 0 6px;
+  }
+  .gone-box .nm {
+    font-family:var(--f-display); font-size:27px; text-transform:uppercase; line-height:1;
+  }
+  .gone-box p { margin:8px 0 0; color:var(--ink-soft); font-size:16px; }
+
+  .tbl-scroll { overflow-x:auto; }
+  table {
+    width:100%; border-collapse:collapse; margin-top:4px; background:var(--surface);
+    border:1px solid var(--rule); border-radius:10px; overflow:hidden;
+  }
+  th, td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule); font-size:14px; }
+  thead th {
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-faint); background:var(--surface-alt);
+  }
+  tbody tr:last-child td { border-bottom:0; }
+  td .owner { font-family:var(--f-mono); font-size:11px; color:var(--ink-faint); }
+  .chip {
+    display:inline-block; font-family:var(--f-mono); font-size:10px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:20px;
+  }
+  .chip.savu { background:var(--savu-wash); color:var(--savu); }
+  .chip.toka { background:var(--toka-wash); color:var(--toka); }
+  .chip.dina { background:var(--dina-wash); color:var(--dina); }
+  .chip.none { background:var(--surface-alt); color:var(--ink-faint); }
+  .struck { text-decoration:line-through; color:var(--ink-faint); }
+
+  footer {
+    margin-top:52px; padding-top:20px; border-top:2px solid var(--rule-strong);
+    color:var(--ink-faint); font-size:14px;
+  }
+  footer strong { color:var(--ink-soft); }
+  footer a { color:var(--violet); }
+
+  @media (max-width:700px) {
+    .tribe-cards { grid-template-columns:1fr; }
+    .tribals { grid-template-columns:1fr; }
+  }
+  @media (max-width:600px) {
+    body { font-size:16px; }
+    .row { grid-template-columns:84px 1fr auto auto; gap:8px; padding:12px 14px; }
+    .row .who { font-size:21px; }
+    .count.vcount { font-size:18px; padding-left:8px; min-width:28px; }
+    .wrap { padding-block:30px 52px; }
+  }
+</style>
+<style>
+  /* Week five only: a ledger row for ballots nobody can attribute. */
+  .r-unattributed { --c:var(--out); }
+  .row.vrow.r-unattributed .who { font-family:var(--f-body); font-size:13px;
+                                  letter-spacing:.02em; text-transform:none; }
+  .gone-pair { display:grid; gap:14px; grid-template-columns:repeat(2,1fr); margin-top:22px; }
+  .gone-pair .gone-box { margin-top:0; }
+  @media (max-width:700px) { .gone-pair { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Week five &middot; Episode 5, aired Wednesday 21 October</p>
+    <h1>Two tribals. Two boots.<br><span class="tint">Mike's streak</span> died by friendly fire.</h1>
+    <p class="standfirst">
+      Toka won immunity and sat the night out while Savu and Dina both voted. Alexis Levine went
+      from one, Linnea Capobianco from the other after a 4&ndash;4 tie that got within one refusal
+      of a rock draw. The extra votes that broke it were handed over by somebody from the same
+      roster as the castaway they took out.
+    </p>
+    <div class="rule"></div>
+  </header>
+
+  <h2>Standings</h2>
+  <p class="sec-note">
+    Castaways still in the game, which of the three tribes each one is on, and how many votes have
+    been cast against that roster across all six Tribal Councils &mdash; the full ledger is
+    <a href="#votes">at the bottom</a>.
+  </p>
+
+  <div class="standings">
+    <div class="row r-mike">
+      <div class="who">Mike</div>
+      <div class="bar">
+        <span class="pip toka" title="Carter Krull &mdash; Toka">T</span>
+        <span class="pip toka" title="Maggie Nestor &mdash; Toka">T</span>
+        <span class="pip toka" title="Mike Pinsky &mdash; Toka">T</span>
+        <span class="pip toka" title="Thien An Nguyen &mdash; Toka">T</span>
+        <span class="pip gone" title="Linnea Capobianco &mdash; voted out, episode 5">&times;</span>
+      </div>
+      <div class="count">4<small>left</small></div>
+      <div class="count vcount">4<small>votes</small></div>
+    </div>
+    <div class="row r-cagney">
+      <div class="who">Cagney</div>
+      <div class="bar">
+        <span class="pip savu" title="Devin Way &mdash; Savu">S</span>
+        <span class="pip toka" title="Kristin Flickinger &mdash; Toka">T</span>
+        <span class="pip dina" title="Eric Macksoud &mdash; Dina">D</span>
+        <span class="pip gone" title="Alexis Levine &mdash; voted out, episode 5">&times;</span>
+        <span class="pip gone" title="Rob Antonson &mdash; quit, episode 3">Q</span>
+      </div>
+      <div class="count">3<small>left</small></div>
+      <div class="count vcount">8<small>votes</small></div>
+    </div>
+    <div class="row r-daron">
+      <div class="who">Daron</div>
+      <div class="bar">
+        <span class="pip savu" title="Angelica &quot;Jelly&quot; Loblack &mdash; Savu">S</span>
+        <span class="pip toka" title="Brady Booker &mdash; Toka">T</span>
+        <span class="pip dina" title="Lewis Kelly &mdash; Dina">D</span>
+        <span class="pip gone" title="Aaliyah Puglia &mdash; voted out, episode 1">&times;</span>
+        <span class="pip gone" title="Patt Cannaday &mdash; voted out, episode 3">&times;</span>
+      </div>
+      <div class="count">3<small>left</small></div>
+      <div class="count vcount">16<small>votes</small></div>
+    </div>
+    <div class="row r-will">
+      <div class="who">Will</div>
+      <div class="bar">
+        <span class="pip savu" title="Ori Jean-Charles &mdash; Savu">S</span>
+        <span class="pip dina" title="Danny Kilby &mdash; Dina">D</span>
+        <span class="pip dina" title="Sharonda Cox &mdash; Dina">D</span>
+        <span class="pip gone" title="Ana Sani &mdash; voted out, episode 2">&times;</span>
+        <span class="pip gone" title="Jenna Doore &mdash; voted out, episode 4">&times;</span>
+      </div>
+      <div class="count">3<small>left</small></div>
+      <div class="count vcount">17<small>votes</small></div>
+    </div>
+  </div>
+
+  <p class="legend">
+    <span><span class="swatch sw-savu"></span>Savu (purple)</span>
+    <span><span class="swatch sw-toka"></span>Toka (yellow)</span>
+    <span><span class="swatch sw-dina"></span>Dina (red)</span>
+    <span>&times; voted out</span>
+    <span>Q quit</span>
+  </p>
+
+  <h2>The three tribes</h2>
+  <p class="sec-note">After both Tribal Councils. Fourteen left, and no swap this week.</p>
+
+  <div class="tribe-cards">
+    <div class="tcard toka">
+      <h3>Toka</h3>
+      <p class="n">Yellow &middot; 6 &middot; won immunity</p>
+      <ul>
+        <li>Brady Booker<span>Daron</span></li>
+        <li>Kristin Flickinger<span>Cagney</span></li>
+        <li>Carter Krull<span>Mike</span></li>
+        <li>Maggie Nestor<span>Mike</span></li>
+        <li>Thien An Nguyen<span>Mike</span></li>
+        <li>Mike Pinsky<span>Mike</span></li>
+      </ul>
+    </div>
+    <div class="tcard dina">
+      <h3>Dina</h3>
+      <p class="n">Red &middot; 5 &middot; lost Linnea</p>
+      <ul>
+        <li>Cristian Chavez<span>&mdash; undrafted</span></li>
+        <li>Sharonda Cox<span>Will</span></li>
+        <li>Lewis Kelly<span>Daron</span></li>
+        <li>Danny Kilby<span>Will</span></li>
+        <li>Eric Macksoud<span>Cagney</span></li>
+      </ul>
+    </div>
+    <div class="tcard savu">
+      <h3>Savu</h3>
+      <p class="n">Purple &middot; 3 &middot; lost Alexis</p>
+      <ul>
+        <li>Ori Jean-Charles<span>Will</span></li>
+        <li>Angelica &ldquo;Jelly&rdquo; Loblack<span>Daron</span></li>
+        <li>Devin Way<span>Cagney</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="story">
+    <h2>Mike's own castaway armed the vote</h2>
+    <p>
+      Maggie Nestor drew the journey, came back with a second extra vote on top of the one already
+      in hand, and gave both of them away &mdash; one to Danny Kilby, one to Lewis Kelly, both on
+      Dina, with instructions to use them on Linnea Capobianco. Both were played exactly that way.
+    </p>
+    <p>
+      Maggie Nestor is Mike's twelfth pick. Linnea Capobianco was Mike's thirteenth. Four episodes
+      and thirty-four ballots went by without a single vote being cast against anybody on that
+      roster, and the run ended with one of Mike's castaways handing out the weapons and naming
+      the target.
+    </p>
+
+    <h2>Daron came within one refusal of losing Lewis</h2>
+    <p>
+      Dina's vote came back 4&ndash;4 between Lewis Kelly and Linnea Capobianco &mdash; eight
+      ballots from six people, because both of Maggie's extra votes landed on Linnea. The revote
+      deadlocked as well, which put rocks on the table for everybody not tied.
+    </p>
+    <p>
+      Danny Kilby would not move off Lewis and was willing to draw. Eric Macksoud, Sharonda Cox
+      and Cristian Chavez came across to Linnea rather than risk it, and nobody drew a rock. So
+      Daron's first-overall pick survived a tie, Mike's thirteenth went home, and the castaway who
+      decided it belongs to Will.
+    </p>
+
+    <h2>Savu is three people from three different rosters</h2>
+    <p>
+      Alexis Levine's exit leaves Savu at three: Ori Jean-Charles for Will, Jelly Loblack for
+      Daron, Devin Way for Cagney. One each, no repeats, and nobody from Mike &mdash; who instead
+      holds four of Toka's six. The smallest tribe and the biggest one are the two cleanest splits
+      on the board.
+    </p>
+
+    <h2>The prosecution and the defence are both gone</h2>
+    <p>
+      Draft night noted that Cagney had taken criminal defence attorney Alexis Levine at number
+      three while Daron took federal prosecutor Patt Cannaday at number nine, and that they would
+      be on opposite rosters all season. Patt went in episode 3. Alexis went in episode 5. The
+      season is fourteen people deep and neither lawyer made it there.
+    </p>
+
+    <h2>Cristian Chavez called out a fake idol and is still here</h2>
+    <p>
+      Lewis Kelly handed Sharonda Cox a ring, called it a blood idol and said it tied their two
+      games together for two Tribal Councils. Cristian Chavez pointed out that Lewis had already
+      described the same ring to the tribe as a traditional Irish wedding ring. The one castaway
+      nobody drafted has now outlasted seven who were drafted, and spent this episode doing the
+      fact-checking.
+    </p>
+  </div>
+
+  <h2>Hardware watch</h2>
+  <p class="sec-note">
+    Advantages known to be in play at the end of episode 5. The mini idol from the episode-4
+    challenge is still left out: only one source ever mentioned it and none say who holds it.
+  </p>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr><th>Holder</th><th>Tribe</th><th>Drafted by</th><th>What it is</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Angelica &ldquo;Jelly&rdquo; Loblack</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Daron</span></td><td>Hidden immunity idol, found in episode 2 &mdash; carried through two Tribals unplayed</td></tr>
+        <tr><td>Carter Krull</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td><td>Hidden immunity idol &mdash; Rob's, never played</td></tr>
+        <tr><td>Devin Way</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Cagney</span></td><td>Secret extra vote from episode 3 &mdash; Savu cast four ballots for four people, so this one is still in hand</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sec-note" style="margin-top:14px">
+    Spent this week: both of Maggie Nestor's extra votes, given away on the journey and played on
+    Linnea Capobianco. Never an advantage at all: Lewis Kelly's blood ring.
+  </p>
+
+  <div class="gone-pair">
+    <div class="gone-box">
+      <p class="tag">Voted out &middot; Savu</p>
+      <div class="nm">Alexis Levine</div>
+      <p>
+        Criminal defence attorney, 34, Atlanta, Georgia &mdash; drafted 3rd by Cagney, and the
+        fifth castaway voted out. Three of Savu's four wrote the name down. The fourth ballot's
+        recipient is named by only one source, so it is not reported here.
+      </p>
+    </div>
+    <div class="gone-box">
+      <p class="tag">Voted out &middot; Dina</p>
+      <div class="nm">Linnea Capobianco</div>
+      <p>
+        Entrepreneur, 25, Kearny then Jersey City, New Jersey &mdash; drafted 13th by Mike, the
+        sixth castaway voted out, and the first loss for the one drafter who had not lost anybody.
+        Took four of the eight ballots at Dina, tied, and lost the stand-off that followed.
+      </p>
+    </div>
+  </div>
+
+  <h2>Who owns whom</h2>
+  <p class="sec-note">The full board after episode 5. Seven of the 21 are now out of the game.</p>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr><th>Castaway</th><th>Tribe</th><th>Drafted by</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Brady Booker</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Daron</span></td></tr>
+        <tr><td>Kristin Flickinger</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td>Carter Krull</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Maggie Nestor</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Thien An Nguyen</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Mike Pinsky</td><td><span class="chip toka">Toka</span></td><td><span class="owner">Mike</span></td></tr>
+        <tr><td>Cristian Chavez</td><td><span class="chip dina">Dina</span></td><td><span class="owner">&mdash; undrafted</span></td></tr>
+        <tr><td>Sharonda Cox</td><td><span class="chip dina">Dina</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Lewis Kelly</td><td><span class="chip dina">Dina</span></td><td><span class="owner">Daron</span></td></tr>
+        <tr><td>Danny Kilby</td><td><span class="chip dina">Dina</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Eric Macksoud</td><td><span class="chip dina">Dina</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td>Ori Jean-Charles</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Will</span></td></tr>
+        <tr><td>Angelica &ldquo;Jelly&rdquo; Loblack</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Daron</span></td></tr>
+        <tr><td>Devin Way</td><td><span class="chip savu">Savu</span></td><td><span class="owner">Cagney</span></td></tr>
+        <tr><td class="struck">Aaliyah Puglia</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Daron &mdash; out ep 1</span></td></tr>
+        <tr><td class="struck">Ana Sani</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Will &mdash; out ep 2</span></td></tr>
+        <tr><td class="struck">Rob Antonson</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Cagney &mdash; quit ep 3</span></td></tr>
+        <tr><td class="struck">Patt Cannaday</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Daron &mdash; out ep 3</span></td></tr>
+        <tr><td class="struck">Jenna Doore</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Will &mdash; out ep 4</span></td></tr>
+        <tr><td class="struck">Alexis Levine</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Cagney &mdash; out ep 5</span></td></tr>
+        <tr><td class="struck">Linnea Capobianco</td><td><span class="chip none">&mdash;</span></td><td><span class="owner">Mike &mdash; out ep 5</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="votes">Vote ledger</h2>
+  <p class="sec-note">
+    Every vote cast this season, counted against whoever drafted the castaway. Forty-six ballots
+    across six Tribal Councils, and Will is still carrying the most of them.
+  </p>
+
+  <div class="standings">
+    <div class="row vrow r-will">
+      <div class="who">Will</div>
+      <div class="track"><div class="fill" style="width:100%"></div></div>
+      <div class="count">17<small>votes &middot; 37%</small></div>
+    </div>
+    <div class="row vrow r-daron">
+      <div class="who">Daron</div>
+      <div class="track"><div class="fill" style="width:94.1%"></div></div>
+      <div class="count">16<small>votes &middot; 35%</small></div>
+    </div>
+    <div class="row vrow r-cagney">
+      <div class="who">Cagney</div>
+      <div class="track"><div class="fill" style="width:47.1%"></div></div>
+      <div class="count">8<small>votes &middot; 17%</small></div>
+    </div>
+    <div class="row vrow r-mike">
+      <div class="who">Mike</div>
+      <div class="track"><div class="fill" style="width:23.5%"></div></div>
+      <div class="count">4<small>votes &middot; 9%</small></div>
+    </div>
+    <div class="row vrow r-unattributed">
+      <div class="who">Unattributed</div>
+      <div class="track"><div class="fill" style="width:5.9%"></div></div>
+      <div class="count">1<small>votes &middot; 2%</small></div>
+    </div>
+  </div>
+
+  <div class="kicker">
+    <h3>All four drafters are finally on the board</h3>
+    <p>
+      Mike got through four episodes and thirty-four ballots without one vote being cast against
+      that roster, then took four in a single night, every one of them on Linnea Capobianco.
+      Twelve of the 21 castaways still have not been written down once.
+    </p>
+  </div>
+
+  <div class="tribals">
+    <div class="tc toka">
+      <h3>Episode 1</h3>
+      <p class="n">Toka &middot; day 3 &middot; 10 at tribal, 8 ballots</p>
+      <ul>
+        <li class="boot"><span class="nm">Aaliyah Puglia<span>Daron &mdash; voted out</span></span><span class="v">6</span></li>
+        <li><span class="nm">Jenna Doore<span>Will</span></span><span class="v">2</span></li>
+      </ul>
+      <p class="ft">
+        Only eight ballots from ten people: Aaliyah and Jenna both played a Shot in the Dark,
+        both drew Not Safe, and both forfeited their vote.
+      </p>
+    </div>
+    <div class="tc savu">
+      <h3>Episode 2</h3>
+      <p class="n">Savu &middot; day 5 &middot; 10 at tribal, 10 ballots</p>
+      <ul>
+        <li class="boot"><span class="nm">Ana Sani<span>Will &mdash; voted out</span></span><span class="v">6</span></li>
+        <li><span class="nm">Eric Macksoud<span>Cagney</span></span><span class="v">4</span></li>
+      </ul>
+      <p class="ft">
+        Rob Antonson tried to self&#8209;vote, production stopped it, and a different name went
+        down instead &mdash; so all ten voted and Rob took nothing.
+      </p>
+    </div>
+    <div class="tc toka">
+      <h3>Episode 3</h3>
+      <p class="n">Toka &middot; day 7 &middot; 11 at tribal, 11 ballots</p>
+      <ul>
+        <li class="boot"><span class="nm">Patt Cannaday<span>Daron &mdash; voted out</span></span><span class="v">6</span></li>
+        <li><span class="nm">Danny Kilby<span>Will</span></span><span class="v">5</span></li>
+      </ul>
+      <p class="ft">
+        Lewis arrived from Exile and Carter mutinied over from Savu, making Toka eleven. They
+        were the swing votes.
+      </p>
+    </div>
+    <div class="tc savu">
+      <h3>Episode 4</h3>
+      <p class="n">Savu &middot; day 9 &middot; 5 at tribal, 5 ballots</p>
+      <ul>
+        <li class="boot"><span class="nm">Jenna Doore<span>Will &mdash; voted out</span></span><span class="v">4</span></li>
+        <li><span class="nm">Alexis Levine<span>Cagney</span></span><span class="v">1</span></li>
+      </ul>
+      <p class="ft">
+        Post-swap Savu, five strong. The lone vote against Alexis was Jenna's own.
+      </p>
+    </div>
+    <div class="tc savu">
+      <h3>Episode 5</h3>
+      <p class="n">Savu &middot; days 9-10 &middot; 4 at tribal, 4 ballots</p>
+      <ul>
+        <li class="boot"><span class="nm">Alexis Levine<span>Cagney &mdash; voted out</span></span><span class="v">3</span></li>
+        <li><span class="nm">Unattributed<span>recipient not confirmed</span></span><span class="v">1</span></li>
+      </ul>
+      <p class="ft">
+        Three of Savu's four turned on Alexis. One ballot is left uncredited: a single outlet
+        names a recipient for it and nothing corroborates that.
+      </p>
+    </div>
+    <div class="tc dina">
+      <h3>Episode 5</h3>
+      <p class="n">Dina &middot; days 9-10 &middot; 6 at tribal, 8 ballots, 2 extra votes played</p>
+      <ul>
+        <li class="boot"><span class="nm">Linnea Capobianco<span>Mike &mdash; voted out</span></span><span class="v">4</span></li>
+        <li><span class="nm">Lewis Kelly<span>Daron</span></span><span class="v">4</span></li>
+      </ul>
+      <p class="ft">
+        Tied 4&ndash;4 on eight ballots, because Maggie's two extra votes both landed on Linnea.
+        The revote deadlocked too, and the tie was settled by a stand-off rather than by a count.
+      </p>
+    </div>
+  </div>
+
+  <p class="sec-note" style="margin-top:22px">
+    Nine of the 21 have ever been written down. Here are all nine &mdash; no Tribal this season
+    has produced a third name on a parchment, so these are complete tallies rather than just the
+    majority.
+  </p>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr><th>Castaway</th><th class="num">Votes</th><th>Tribals</th><th>Drafted by</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="struck">Aaliyah Puglia</td><td class="num">6</td><td><span class="owner">ep 1</span></td><td><span class="owner">Daron</span></td><td><span class="chip out">Out</span></td></tr>
+        <tr><td class="struck">Ana Sani</td><td class="num">6</td><td><span class="owner">ep 2</span></td><td><span class="owner">Will</span></td><td><span class="chip out">Out</span></td></tr>
+        <tr><td class="struck">Jenna Doore</td><td class="num">6</td><td><span class="owner">ep 1, ep 4</span></td><td><span class="owner">Will</span></td><td><span class="chip out">Out</span></td></tr>
+        <tr><td class="struck">Patt Cannaday</td><td class="num">6</td><td><span class="owner">ep 3</span></td><td><span class="owner">Daron</span></td><td><span class="chip out">Out</span></td></tr>
+        <tr><td>Danny Kilby</td><td class="num">5</td><td><span class="owner">ep 3</span></td><td><span class="owner">Will</span></td><td><span class="chip in">Still in</span></td></tr>
+        <tr><td class="struck">Alexis Levine</td><td class="num">4</td><td><span class="owner">ep 4, ep 5</span></td><td><span class="owner">Cagney</span></td><td><span class="chip out">Out</span></td></tr>
+        <tr><td>Eric Macksoud</td><td class="num">4</td><td><span class="owner">ep 2</span></td><td><span class="owner">Cagney</span></td><td><span class="chip in">Still in</span></td></tr>
+        <tr><td>Lewis Kelly</td><td class="num">4</td><td><span class="owner">ep 5</span></td><td><span class="owner">Daron</span></td><td><span class="chip in">Still in</span></td></tr>
+        <tr><td class="struck">Linnea Capobianco</td><td class="num">4</td><td><span class="owner">ep 5</span></td><td><span class="owner">Mike</span></td><td><span class="chip out">Out</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="story">
+    <p style="margin-top:24px">
+      <strong>Danny Kilby has still survived more votes than anyone.</strong> Five of the eleven
+      ballots in episode 3 carried Kilby's name, one short of the six that sent Patt Cannaday
+      home. Kilby then spent episode 5 refusing to move off Lewis Kelly, which is what forced the
+      rest of Dina to settle.
+    </p>
+    <p>
+      <strong>Jenna Doore and Alexis Levine have each been written down at two Tribals.</strong>
+      Alexis took one vote in episode 4 and three in episode 5, and the second set was the last.
+      Lewis Kelly joined the four-vote group without leaving, which nobody else has managed.
+    </p>
+  </div>
+
+  <div class="kicker">
+    <h3>What is left out, and why</h3>
+    <p>
+      The revote at Dina has no number here. Two outlets print a second 4&ndash;4, which cannot
+      happen: a revote excludes the two tied castaways, leaving four voters, and extra votes do
+      not carry into it. The stand-off that followed has no number either &mdash; every account
+      agrees Kilby held for Lewis while the other three came across, but that is not the
+      whole-tribe agreement the stated rule calls for, so the mechanism is described and the
+      count is not. Savu's fourth ballot is uncredited for the same reason: one source, no
+      corroboration. Paramount+ has now printed a wrong count in three of five weeks.
+    </p>
+  </div>
+
+  <footer>
+    <p>
+      <strong>Next episode: Wednesday 28 October, 8/7c on CBS.</strong>
+      Toka 6, Dina 5, Savu 3 going into week six. Fourteen still in the game, three known
+      advantages out there, and the one castaway nobody picked is still outlasting the ones
+      everybody did.
+    </p>
+    <p>
+      <a href="/week4.html">Week four</a> &middot; <a href="/week3.html">week three</a>
+      &middot; <a href="/week2.html">week two</a> &middot; <a href="/week1.html">week one</a>
+      &middot; <a href="/recap.html">the draft recap</a> &middot; the live board is at
+      <a href="/">survivor-draft.vercel.app</a>.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>

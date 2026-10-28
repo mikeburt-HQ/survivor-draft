@@ -23,6 +23,23 @@ Sources and the conflicts that were resolved, per tribal:
         Paramount+ printed Jenna 3 / Alexis 1, which totals 4 of 5 votes, so
         it under-counts rather than disagreeing. Yahoo's LIVE blog called it
         unanimous; a live blog is the weakest source in the set.
+  ep 5  TWO tribals -- Toka won immunity and both Savu and Dina voted.
+        Savu: Alexis 3, plus ONE UNATTRIBUTED ballot. The 3-1 split is
+        three-source (Wikipedia, Yahoo, Inside Survivor); only Yahoo names a
+        recipient for the lone vote, so it is not credited to anyone here.
+        Surviving Tribal calls it unanimous and is the lone dissenter, as it
+        was on episode 4, where it was wrong.
+        Dina: Linnea 4 / Lewis 4 from EIGHT ballots -- six members plus the two
+        extra votes Maggie handed to Kilby and Lewis, both played on Linnea
+        (Yahoo's per-person breakdown and DK Network agree, and it is the only
+        reading that makes 4-4 arithmetically possible).
+        Not recorded: the REVOTE. Yahoo and Surviving Tribal both print a
+        second 4-4, which cannot happen -- a revote excludes the two tied
+        castaways, leaving four voters, and extra votes do not carry into it.
+        Not recorded either: the consensus round that followed, where Kilby
+        held for Lewis and the other three came across to Linnea. No source
+        gives a tally that is consistent with the stated unanimity rule, and
+        no rocks were drawn.
 
 No tribal this season has produced a third vote recipient -- every tally is
 two-way, so there are no stray votes hiding outside these numbers.
@@ -97,6 +114,29 @@ TRIBALS = [
         "note": "Post-swap Savu, five strong. Jenna cast the lone vote "
                 "against Alexis.",
     },
+    # Episode 5 sent TWO tribes to Tribal Council. Optional keys appear from
+    # here on: extra_votes adds ballots beyond the members present,
+    # unattributed holds ballots whose recipient no source confirms, out names
+    # the castaway who left (needed when the vote TIES), and tie says the
+    # result was settled after the vote rather than by it.
+    {
+        "ep": 5, "day": None, "day_label": "days 9-10", "tribe": "Savu",
+        "votes": {"Alexis Levine": 3}, "unattributed": 1,
+        "no_vote": [], "out": "Alexis Levine",
+        "note": "Three of Savu's four turned on Alexis. The fourth ballot's "
+                "recipient is named by only one source, so it is left "
+                "uncredited here.",
+    },
+    {
+        "ep": 5, "day": None, "day_label": "days 9-10", "tribe": "Dina",
+        "votes": {"Linnea Capobianco": 4, "Lewis Kelly": 4},
+        "extra_votes": 2, "no_vote": [], "out": "Linnea Capobianco",
+        "tie": True,
+        "note": "Eight ballots from six people: Maggie's two extra votes went "
+                "to Kilby and Lewis and both were played on Linnea. The 4-4 "
+                "tie, a deadlocked revote and a refusal to budge took it to "
+                "the brink of rocks before the tribe settled on Linnea.",
+    },
 ]
 
 # Non-vote exits and mid-game moves, so populations stay honest.
@@ -149,58 +189,90 @@ gone = []
 print("Tribal councils, episode by episode")
 print("=" * 72)
 
+moves_done = set()      # an episode's moves fire ONCE, not once per tribal
+
 for t in TRIBALS:
     ep, tribe = t["ep"], t["tribe"]
 
     # mid-episode moves land before that episode's tribal
-    for name, e in QUIT.items():
-        if e == ep:
-            pop["Savu" if name in START_SAVU else "Toka"].discard(name)
-            gone.append((ep, name, "quit"))
-    for name, e in MUTINY.items():
-        if e == ep:
-            pop["Savu"].discard(name)
-            pop["Toka"].add(name)
-    for name, e in EXILE_JOINED.items():
-        if e == ep:
-            exile.discard(name)
-            pop["Toka"].add(name)
+    if ep not in moves_done:
+        moves_done.add(ep)
+        for name, e in QUIT.items():
+            if e == ep:
+                pop["Savu" if name in START_SAVU else "Toka"].discard(name)
+                gone.append((ep, name, "quit"))
+        for name, e in MUTINY.items():
+            if e == ep:
+                pop["Savu"].discard(name)
+                pop["Toka"].add(name)
+        for name, e in EXILE_JOINED.items():
+            if e == ep:
+                exile.discard(name)
+                pop["Toka"].add(name)
 
-    if ep == 4:                      # the swap replaces the two-tribe model
-        pop = {k: set(v) for k, v in SWAP.items()}
+        if ep == 4:                  # the swap replaces the two-tribe model
+            pop = {k: set(v) for k, v in SWAP.items()}
 
     # Snapshot: pop[tribe] is mutated below, and a live reference would make
     # every reported attendance one short of the truth.
     attending = frozenset(pop[tribe])
-    eligible = len(attending) - len(t["no_vote"])
-    # Published on the page, so it is recorded here rather than recomputed
+    extra = t.get("extra_votes", 0)
+    unattributed = t.get("unattributed", 0)
+    eligible = len(attending) - len(t["no_vote"]) + extra
+    # Published on the page, so these are recorded here rather than recomputed
     # by any consumer: one derivation, one number.
     t["_attending"] = len(attending)
-    cast_votes = sum(t["votes"].values())
+    t["_label"] = t.get("day_label") or f"day {t['day']}"
+    cast_votes = sum(t["votes"].values()) + unattributed
 
     assert cast_votes == eligible, (
-        f"ep {ep}: tally sums to {cast_votes} but {eligible} members could "
-        f"vote ({len(attending)} at tribal, {len(t['no_vote'])} forfeited)"
+        f"ep {ep} {tribe}: ballots account for {cast_votes} but {eligible} "
+        f"were available ({len(attending)} at tribal, "
+        f"{len(t['no_vote'])} forfeited, {extra} extra votes played)"
     )
     for n in t["votes"]:
         assert n in attending, f"ep {ep}: {n} took votes but was not on {tribe}"
 
-    booted = max(t["votes"], key=t["votes"].get)
-    assert t["votes"][booted] > cast_votes / 2, \
-        f"ep {ep}: {booted} left without a majority"
+    # With a tie the vote alone does not name the boot, so it must be declared.
+    top = max(t["votes"].values())
+    tied = [n for n, v in t["votes"].items() if v == top]
+    if t.get("tie"):
+        assert len(tied) > 1, f"ep {ep} {tribe}: marked a tie but nobody tied"
+        booted = t["out"]
+        assert booted in tied, (
+            f"ep {ep} {tribe}: {booted} left but was not among the tied "
+            f"castaways {tied}"
+        )
+    else:
+        assert len(tied) == 1, f"ep {ep} {tribe}: tied {tied} without a tie flag"
+        booted = t.get("out", tied[0])
+        assert booted == tied[0], \
+            f"ep {ep} {tribe}: {booted} left but {tied[0]} had the most votes"
+        assert t["votes"][booted] > cast_votes / 2, \
+            f"ep {ep} {tribe}: {booted} left without a majority"
+
+    assert booted in attending, f"ep {ep}: {booted} was not on {tribe}"
     pop[tribe].discard(booted)
     gone.append((ep, booted, "voted out"))
 
     tally = " / ".join(f"{n} {v}" for n, v in
                        sorted(t["votes"].items(), key=lambda kv: -kv[1]))
-    print(f"\nEpisode {ep}, day {t['day']} -- {tribe}, "
-          f"{len(attending)} at tribal, {cast_votes} votes cast")
+    if unattributed:
+        tally += f" / {unattributed} unattributed"
+    print(f"\nEpisode {ep}, {t['_label']} -- {tribe}, "
+          f"{len(attending)} at tribal, {cast_votes} ballots"
+          + (f" ({extra} from extra votes)" if extra else ""))
     print(f"  {tally}")
-    print(f"  out: {booted}")
+    print(f"  out: {booted}" + ("  (after a tie)" if t.get("tie") else ""))
     print(f"  {t['note']}")
 
+LAST_EP = max(t["ep"] for t in TRIBALS)
+EXPECTED_ALIVE = {4: 16, 5: 14}
 still_in = sum(len(v) for v in pop.values()) + len(exile)
-assert still_in == 16, f"16 should remain after ep 4; model says {still_in}"
+assert still_in == EXPECTED_ALIVE[LAST_EP], (
+    f"{EXPECTED_ALIVE[LAST_EP]} should remain after ep {LAST_EP}; "
+    f"model says {still_in}"
+)
 
 # --- roll up ---------------------------------------------------------------
 received = {}
@@ -212,26 +284,36 @@ owner = {n: d for d, picks in DRAFT.items() for n in picks}
 for n in UNDRAFTED:
     owner[n] = "(undrafted)"
 
-total_votes = sum(received.values())
-assert total_votes == sum(sum(t["votes"].values()) for t in TRIBALS)
+# Attributed votes are those credited to a named castaway; UNATTRIBUTED are
+# ballots that were cast but whose recipient no source confirms. Both are real
+# ballots, so TOTAL_BALLOTS is the denominator and the two must reconcile to it.
+attributed = sum(received.values())
+unattributed_total = sum(t.get("unattributed", 0) for t in TRIBALS)
+TOTAL_BALLOTS = attributed + unattributed_total
+assert attributed == sum(sum(t["votes"].values()) for t in TRIBALS)
 
 by_drafter = {d: 0 for d in DRAFT}
 by_drafter["(undrafted)"] = 0
 for n, v in received.items():
     by_drafter[owner[n]] += v
-assert sum(by_drafter.values()) == total_votes, "roll-up lost votes"
+assert sum(by_drafter.values()) == attributed, "roll-up lost votes"
+assert sum(by_drafter.values()) + unattributed_total == TOTAL_BALLOTS
 
 print("\n" + "=" * 72)
-print(f"Votes cast at the four tribals: {total_votes}")
+print(f"Ballots cast at the {len(TRIBALS)} tribals: {TOTAL_BALLOTS} "
+      f"({attributed} attributed, {unattributed_total} unattributed)")
 
 print("\nVotes received, by drafter")
 print("-" * 72)
 for d, v in sorted(by_drafter.items(), key=lambda kv: -kv[1]):
-    share = 100 * v / total_votes
+    share = 100 * v / TOTAL_BALLOTS
     team = DRAFT.get(d, UNDRAFTED)
     hit = [n for n in team if received.get(n)]
     print(f"  {d:<12} {v:>3} votes  ({share:4.1f}%)  "
           f"{len(hit)} of {len(team)} castaways voted against")
+if unattributed_total:
+    print(f"  {'unattributed':<12} {unattributed_total:>3} votes  "
+          f"({100 * unattributed_total / TOTAL_BALLOTS:4.1f}%)")
 
 print("\nVotes received, by castaway")
 print("-" * 72)

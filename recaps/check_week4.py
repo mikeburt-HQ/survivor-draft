@@ -35,6 +35,11 @@ finally:
 page = PAGE.read_text(encoding="utf-8")
 fail = []
 
+# This page is a FROZEN snapshot: its figures stop at episode 4 and must keep
+# reconciling as later episodes are added to vote_history. Comparing against
+# the whole model makes a correct page read as wrong.
+THROUGH = 4
+
 QUOTES = {"“": '"', "”": '"', "‘": "'", "’": "'"}
 
 
@@ -220,7 +225,7 @@ try:
 finally:
     sys.stdout = _stdout
 
-ep4 = next(t for t in vh.TRIBALS if t["ep"] == 4)
+ep4 = next(t for t in vh.TRIBALS if t["ep"] == THROUGH and t["tribe"] == "Savu")
 boot = max(ep4["votes"], key=ep4["votes"].get)
 runner = min(ep4["votes"], key=ep4["votes"].get)
 want_tally = f"{ep4['votes'][boot]}-{ep4['votes'][runner]}"
@@ -240,8 +245,9 @@ check(ep4["votes"][runner] == 1 and "single vote" in gone_box,
 # --- 5c. votes-taken column matches the ledger ----------------------------
 received = {}
 for t in vh.TRIBALS:
-    for n, v in t["votes"].items():
-        received[n] = received.get(n, 0) + v
+    if t["ep"] <= THROUGH:
+        for n, v in t["votes"].items():
+            received[n] = received.get(n, 0) + v
 vh_owner = {n: d for d, picks in vh.DRAFT.items() for n in picks}
 votes_by_drafter = {d: 0 for d in vh.DRAFT}
 for n, v in received.items():
