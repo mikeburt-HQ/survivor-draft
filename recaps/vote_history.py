@@ -40,6 +40,13 @@ Sources and the conflicts that were resolved, per tribal:
         held for Lewis and the other three came across to Linnea. No source
         gives a tally that is consistent with the stated unanimity rule, and
         no rocks were drawn.
+  ep 6  Ori 2, from TWO ballots cast by THREE people. Ori played a Shot in the
+        Dark, drew Not Safe, and forfeited that night's vote -- the same rule
+        that made episode 1 eight ballots from ten. Wikipedia's episode table
+        prints 2-0 and its summary says "unanimously"; both are correct and
+        describe the same tally, differing only on whether the forfeited
+        ballot is counted. TVLine, Yahoo, DK Network and Primetimer all name
+        Jelly and Devin as the two voters, so the tally is fully attributed.
 
 No tribal this season has produced a third vote recipient -- every tally is
 two-way, so there are no stray votes hiding outside these numbers.
@@ -136,6 +143,14 @@ TRIBALS = [
                 "to Kilby and Lewis and both were played on Linnea. The 4-4 "
                 "tie, a deadlocked revote and a refusal to budge took it to "
                 "the brink of rocks before the tribe settled on Linnea.",
+    },
+    {
+        "ep": 6, "day": None, "day_label": "days 10-12", "tribe": "Savu",
+        "votes": {"Ori Jean-Charles": 2},
+        "no_vote": ["Ori Jean-Charles"],
+        "note": "Two ballots from three people: Ori played a Shot in the Dark, "
+                "drew Not Safe, and forfeited the vote. Jelly and Devin both "
+                "wrote Ori's name, so 2-0 and 'unanimous' are the same result.",
     },
 ]
 
@@ -267,7 +282,7 @@ for t in TRIBALS:
     print(f"  {t['note']}")
 
 LAST_EP = max(t["ep"] for t in TRIBALS)
-EXPECTED_ALIVE = {4: 16, 5: 14}
+EXPECTED_ALIVE = {4: 16, 5: 14, 6: 13}
 still_in = sum(len(v) for v in pop.values()) + len(exile)
 assert still_in == EXPECTED_ALIVE[LAST_EP], (
     f"{EXPECTED_ALIVE[LAST_EP]} should remain after ep {LAST_EP}; "

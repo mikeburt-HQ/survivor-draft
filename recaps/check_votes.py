@@ -65,11 +65,31 @@ page = PAGE.read_text(encoding="utf8")
 
 CURLY = {"“": '"', "”": '"', "‘": "'", "’": "'",
          "‑": "-", "–": "-", "—": "--", " ": " "}
-NUMWORD = {0: "zero", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five",
-           6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten",
-           11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen",
-           16: "sixteen", 17: "seventeen", 21: "twenty-one",
-           34: "thirty-four", 45: "forty-five", 46: "forty-six"}
+_UNITS = ["zero", "one", "two", "three", "four", "five", "six", "seven",
+          "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+          "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+_TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+         "eighty", "ninety"]
+
+
+def numword(n):
+    """Spell 0-99. Was a hand-typed dict, which went stale at 48 the first
+    week the ballot count passed its last entry -- and the failure read as a
+    page defect, not a missing map key."""
+    if not 0 <= n < 100:
+        return str(n)
+    if n < 20:
+        return _UNITS[n]
+    tens, unit = divmod(n, 10)
+    return _TENS[tens] if not unit else f"{_TENS[tens]}-{_UNITS[unit]}"
+
+
+# The entries the hand-typed map used to carry, kept as a control: the
+# generated speller must reproduce every one of them.
+for _n, _w in ((0, "zero"), (4, "four"), (11, "eleven"), (14, "fourteen"),
+               (16, "sixteen"), (21, "twenty-one"), (34, "thirty-four"),
+               (45, "forty-five"), (46, "forty-six"), (48, "forty-eight")):
+    assert numword(_n) == _w, f"numword({_n}) = {numword(_n)!r}, expected {_w!r}"
 
 
 def norm(s):
@@ -88,7 +108,7 @@ def says(text, n, unit):
     """True if text states n before unit, as either a digit or a word."""
     t = text.lower()
     return (f"{n} {unit.lower()}" in t
-            or f"{NUMWORD.get(n, n)} {unit.lower()}" in t)
+            or f"{numword(n)} {unit.lower()}" in t)
 
 
 failures = []
@@ -204,7 +224,7 @@ check(order == sorted(order, reverse=True),
 # --- 3. the kicker's claims, by branch -----------------------------------
 kick = strip_tags(section('<div class="kicker">', '<div class="tribals">'))
 check(says(kick, clean_total, "of the 21"),
-      f"kicker should say {NUMWORD[clean_total]} of the 21; reads: {kick[:110]}")
+      f"kicker should say {numword(clean_total)} of the 21; reads: {kick[:110]}")
 
 if zero:
     branches.append(f"clean-sheet ({zero})")
@@ -332,7 +352,7 @@ check(ledger.count(TABLE_NOTE) == 1,
       "the castaway table should be introduced by exactly one note")
 intro = strip_tags(section(TABLE_NOTE, '<div class="tbl-scroll">'))
 check(says(intro, len(received), "of the 21"),
-      f"the table note should say {NUMWORD[len(received)]} of the 21; "
+      f"the table note should say {numword(len(received))} of the 21; "
       f"reads: {intro[:100]}")
 
 # --- 6. the prose claims must be the real superlatives -------------------
