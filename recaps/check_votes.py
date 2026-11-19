@@ -160,7 +160,8 @@ for n, v in received.items():
         by_drafter[owner[n]] += v
 assert sum(by_drafter.values()) + undrafted_votes + unattributed == total
 
-out_names = {n for t in TRIBALS for n in vh.outs_of(t)}
+out_names = ({n for t in TRIBALS for n in vh.outs_of(t)}
+             | {n for n, (e, _) in vh.NO_VOTE_EXITS.items() if e <= args.through})
 top = max(list(by_drafter.values()) + [unattributed, undrafted_votes])
 zero = [d for d, v in by_drafter.items() if v == 0]
 clean_total = len([n for n in owner if not received.get(n)])

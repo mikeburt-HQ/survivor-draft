@@ -38,7 +38,8 @@ top = max(by.values())
 print(f"through ep {THROUGH}: {len(T)} tribals, {ballots} ballots, {credits} names")
 for d, v in sorted(by.items(), key=lambda kv: -kv[1]):
     print(f"  {d:12} {v:3}  {round(100 * v / credits)}%  bar {round(100 * v / top, 1)}%")
-outs = {n for t in T for n in vh.outs_of(t)}
+outs = ({n for t in T for n in vh.outs_of(t)}
+        | {n for n, (e, _) in vh.NO_VOTE_EXITS.items() if e <= THROUGH})
 print(f"written down: {len(rec)} of 21; never: {21 - len(rec)}")
 for n, v in sorted(rec.items(), key=lambda kv: (-kv[1], kv[0])):
     eps = ", ".join(f"ep {t['ep']}" for t in T if n in t["votes"])

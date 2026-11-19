@@ -1,4 +1,4 @@
-"""Compose public/week7.html = week8_page.html with the SHARED <style> block
+"""Compose public/week8.html = week8_page.html with the SHARED <style> block
 spliced in verbatim from week7.html.
 
 The style block is MOVED, never retyped: retyping is how a design token

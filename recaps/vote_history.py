@@ -383,8 +383,20 @@ for t in TRIBALS:
     print(f"  out: {booted}" + ("  (after a tie)" if t.get("tie") else ""))
     print(f"  {t['note']}")
 
-LAST_EP = max(t["ep"] for t in TRIBALS)
-EXPECTED_ALIVE = {4: 16, 5: 14, 6: 13, 7: 12, 8: 10}
+# Exits at a Tribal Council where NO VOTE was cast. Episode 9: Lewis Kelly
+# volunteered for the Million Dollar Coin Flip, called fire, the coin landed
+# water, and Lewis was eliminated with no ballots cast (Wikipedia's vote row
+# reads "None"; Paramount+, Yahoo and DK give no tally). Modelled like Rob's
+# quit -- a departure that adds nothing to anyone's vote count -- and kept
+# OUT of TRIBALS so no ledger card or tally is invented for it.
+NO_VOTE_EXITS = {"Lewis Kelly": (9, "coin flip")}
+for _n, (_e, _how) in sorted(NO_VOTE_EXITS.items(), key=lambda kv: kv[1][0]):
+    assert _n in pop.get(MERGED, set()), f"{_n} was not in the game to leave"
+    pop[MERGED].discard(_n)
+    gone.append((_e, _n, _how))
+
+LAST_EP = max([t["ep"] for t in TRIBALS] + [e for e, _ in NO_VOTE_EXITS.values()])
+EXPECTED_ALIVE = {4: 16, 5: 14, 6: 13, 7: 12, 8: 10, 9: 9}
 still_in = sum(len(v) for v in pop.values()) + len(exile)
 assert still_in == EXPECTED_ALIVE[LAST_EP], (
     f"{EXPECTED_ALIVE[LAST_EP]} should remain after ep {LAST_EP}; "
@@ -448,7 +460,7 @@ if unattributed_total:
 
 print("\nVotes received, by castaway")
 print("-" * 72)
-out_names = {n for _, n, how in gone if how == "voted out"}
+out_names = {n for _, n, how in gone if how != "quit"}   # voted out, or a no-vote exit
 for n, v in sorted(received.items(), key=lambda kv: (-kv[1], kv[0])):
     eps = [t["ep"] for t in TRIBALS if n in t["votes"]]
     status = "voted out" if n in out_names else "still in"
