@@ -166,6 +166,8 @@ describe("getTribeColor", () => {
     ["Savu (Purple)", "Purple"],
     ["Toka (Yellow)", "Yellow"],
     ["Dina (Red)", "Red"],
+    // Episode 7 merged everyone into Tovuto, whose buff is blue.
+    ["Tovuto (Blue)", "Blue"],
   ])("%s resolves to the %s buff, not gray", (label, color) => {
     expect(getTribeColor(label)).toBe(TRIBE_COLORS[color]);
     expect(getTribeColor(label)).not.toBe(NO_TRIBE_COLOR);

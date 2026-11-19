@@ -152,9 +152,78 @@ TRIBALS = [
                 "drew Not Safe, and forfeited the vote. Jelly and Devin both "
                 "wrote Ori's name, so 2-0 and 'unanimous' are the same result.",
     },
+    # Episode 7: the merge. Everyone left became Tovuto and all thirteen
+    # voted; Mike Pinsky had individual immunity.
+    {
+        "ep": 7, "day": 14, "tribe": "Tovuto",
+        "votes": {"Brady Booker": 9, "Eric Macksoud": 4},
+        "no_vote": [],
+        "note": "The first merged vote: thirteen people, thirteen ballots, "
+                "no advantages played.",
+    },
+    # Episode 8: the DOUBLE DUO. Castaways played and were voted out in
+    # pairs, so every ballot named a PAIR. `pairs` holds ballots per pair;
+    # `negated` holds ballots that were cast and read but did not count
+    # (Jelly's idol covered her pair, Cristian's Safe Shot in the Dark his).
+    # `votes` is DERIVED below: one credit to each member of a named pair.
+    {
+        "ep": 8, "day": 15, "tribe": "Tovuto",
+        "pairs": {
+            ("Devin Way", 'Angelica "Jelly" Loblack'): 8,
+            ("Danny Kilby", "Kristin Flickinger"): 1,
+            ("Carter Krull", "Cristian Chavez"): 1,
+        },
+        "negated": {
+            ("Devin Way", 'Angelica "Jelly" Loblack'): 8,
+            ("Carter Krull", "Cristian Chavez"): 1,
+        },
+        "no_vote": ["Kristin Flickinger", "Cristian Chavez"],
+        "out": ["Danny Kilby", "Kristin Flickinger"],
+        "note": "Ten ballots from twelve people: Kristin and Cristian both "
+                "played a Shot in the Dark and forfeited their votes. Jelly's "
+                "idol cancelled the eight against Devin and Jelly, Cristian's "
+                "Safe Shot cancelled the one against Carter and Cristian, and "
+                "the only ballot left standing -- Devin's -- sent Kilby and "
+                "Kristin home together.",
+    },
 ]
 
+# A pair ballot credits each member once, so a castaway's figure is "ballots
+# that named them". Derived here, once, for every consumer.
+for _t in TRIBALS:
+    if "pairs" in _t:
+        _t["votes"] = {}
+        for _pair, _v in _t["pairs"].items():
+            assert len(_pair) == 2 and _pair[0] != _pair[1], f"bad pair {_pair}"
+            for _n in _pair:
+                _t["votes"][_n] = _t["votes"].get(_n, 0) + _v
+
+
+def ballots_of(t):
+    """Ballots physically cast at a tribal (a pair ballot is ONE ballot)."""
+    if "pairs" in t:
+        return sum(t["pairs"].values())
+    return sum(t["votes"].values()) + t.get("unattributed", 0)
+
+
+def outs_of(t):
+    """Everyone who left at this tribal, as a list."""
+    o = t.get("out")
+    if o is None:
+        return [max(t["votes"], key=t["votes"].get)]
+    return list(o) if isinstance(o, (list, tuple)) else [o]
+
+
+def negated_of(t):
+    """Per-castaway credits that were cast but cancelled."""
+    neg = {}
+    for pair, v in t.get("negated", {}).items():
+        for n in pair:
+            neg[n] = neg.get(n, 0) + v
+    return neg
+
 # Non-vote exits and mid-game moves, so populations stay honest.
+MERGE_EP, MERGED = 7, "Tovuto"     # every tribe folds into one
 QUIT = {"Rob Antonson": 3}            # quit on day 6, no vote cast
 MUTINY = {"Carter Krull": 3}          # Savu -> Toka in ep 3
 EXILE_JOINED = {"Lewis Kelly": 3}     # Exile -> Toka in ep 3
@@ -227,6 +296,8 @@ for t in TRIBALS:
 
         if ep == 4:                  # the swap replaces the two-tribe model
             pop = {k: set(v) for k, v in SWAP.items()}
+        if ep == MERGE_EP:           # the merge folds every tribe into one
+            pop = {MERGED: set().union(*pop.values())}
 
     # Snapshot: pop[tribe] is mutated below, and a live reference would make
     # every reported attendance one short of the truth.
@@ -238,7 +309,7 @@ for t in TRIBALS:
     # by any consumer: one derivation, one number.
     t["_attending"] = len(attending)
     t["_label"] = t.get("day_label") or f"day {t['day']}"
-    cast_votes = sum(t["votes"].values()) + unattributed
+    cast_votes = ballots_of(t)
 
     assert cast_votes == eligible, (
         f"ep {ep} {tribe}: ballots account for {cast_votes} but {eligible} "
@@ -247,6 +318,37 @@ for t in TRIBALS:
     )
     for n in t["votes"]:
         assert n in attending, f"ep {ep}: {n} took votes but was not on {tribe}"
+    for n in t["no_vote"]:
+        assert n in attending, f"ep {ep}: {n} forfeited but was not at tribal"
+
+    if "pairs" in t:
+        # A pair vote is decided on the ballots that COUNTED. Negated ballots
+        # were cast and read, so they stay in `votes`, but they decide nothing.
+        for pair, v in t.get("negated", {}).items():
+            assert pair in t["pairs"] and 0 < v <= t["pairs"][pair], \
+                f"ep {ep}: negated {pair} x{v} exceeds what it received"
+        counted = {p: v - t.get("negated", {}).get(p, 0)
+                   for p, v in t["pairs"].items()}
+        live = sum(counted.values())
+        top = max(counted.values())
+        lead = [p for p, v in counted.items() if v == top]
+        assert len(lead) == 1, f"ep {ep}: counted ballots tie between {lead}"
+        assert top > live / 2, f"ep {ep}: {lead[0]} left without a majority"
+        assert sorted(lead[0]) == sorted(t["out"]), (
+            f"ep {ep}: {t['out']} declared out but {lead[0]} led the counted "
+            f"ballots {counted}")
+        t["_counted"] = counted
+        for n in t["out"]:
+            assert n in attending, f"ep {ep}: {n} was not on {tribe}"
+            pop[tribe].discard(n)
+            gone.append((ep, n, "voted out"))
+        print(f"\nEpisode {ep}, {t['_label']} -- {tribe}, {len(attending)} at "
+              f"tribal, {cast_votes} ballots against pairs")
+        for p, v in t["pairs"].items():
+            print(f"  {' & '.join(p)}: {v} cast, {counted[p]} counted")
+        print(f"  out: {' & '.join(t['out'])}")
+        print(f"  {t['note']}")
+        continue
 
     # With a tie the vote alone does not name the boot, so it must be declared.
     top = max(t["votes"].values())
@@ -282,7 +384,7 @@ for t in TRIBALS:
     print(f"  {t['note']}")
 
 LAST_EP = max(t["ep"] for t in TRIBALS)
-EXPECTED_ALIVE = {4: 16, 5: 14, 6: 13}
+EXPECTED_ALIVE = {4: 16, 5: 14, 6: 13, 7: 12, 8: 10}
 still_in = sum(len(v) for v in pop.values()) + len(exile)
 assert still_in == EXPECTED_ALIVE[LAST_EP], (
     f"{EXPECTED_ALIVE[LAST_EP]} should remain after ep {LAST_EP}; "
@@ -300,35 +402,49 @@ for n in UNDRAFTED:
     owner[n] = "(undrafted)"
 
 # Attributed votes are those credited to a named castaway; UNATTRIBUTED are
-# ballots that were cast but whose recipient no source confirms. Both are real
-# ballots, so TOTAL_BALLOTS is the denominator and the two must reconcile to it.
+# ballots that were cast but whose recipient no source confirms. Through
+# episode 7 every ballot named one castaway, so credits and ballots are the
+# same number. From episode 8 a pair ballot credits TWO castaways, so the
+# credit total (TOTAL_CREDITS, the denominator for shares) runs ahead of the
+# ballots physically cast (TOTAL_BALLOTS).
 attributed = sum(received.values())
 unattributed_total = sum(t.get("unattributed", 0) for t in TRIBALS)
-TOTAL_BALLOTS = attributed + unattributed_total
+TOTAL_CREDITS = attributed + unattributed_total
+TOTAL_BALLOTS = sum(ballots_of(t) for t in TRIBALS)
 assert attributed == sum(sum(t["votes"].values()) for t in TRIBALS)
+assert TOTAL_CREDITS - TOTAL_BALLOTS == sum(
+    sum(t["pairs"].values()) for t in TRIBALS if "pairs" in t), \
+    "credits should exceed ballots by exactly one per pair ballot"
+# A pair inside ONE roster would credit that drafter twice for one ballot.
+# None exists yet; if one ever does, the roll-up must decide, not drift.
+for t in TRIBALS:
+    for pair in t.get("pairs", {}):
+        assert len({owner[n] for n in pair}) == 2, \
+            f"ep {t['ep']}: pair {pair} sits on one roster"
 
 by_drafter = {d: 0 for d in DRAFT}
 by_drafter["(undrafted)"] = 0
 for n, v in received.items():
     by_drafter[owner[n]] += v
 assert sum(by_drafter.values()) == attributed, "roll-up lost votes"
-assert sum(by_drafter.values()) + unattributed_total == TOTAL_BALLOTS
+assert sum(by_drafter.values()) + unattributed_total == TOTAL_CREDITS
 
 print("\n" + "=" * 72)
-print(f"Ballots cast at the {len(TRIBALS)} tribals: {TOTAL_BALLOTS} "
-      f"({attributed} attributed, {unattributed_total} unattributed)")
+print(f"Ballots cast at the {len(TRIBALS)} tribals: {TOTAL_BALLOTS}; "
+      f"credits {TOTAL_CREDITS} ({attributed} attributed, "
+      f"{unattributed_total} unattributed)")
 
 print("\nVotes received, by drafter")
 print("-" * 72)
 for d, v in sorted(by_drafter.items(), key=lambda kv: -kv[1]):
-    share = 100 * v / TOTAL_BALLOTS
+    share = 100 * v / TOTAL_CREDITS
     team = DRAFT.get(d, UNDRAFTED)
     hit = [n for n in team if received.get(n)]
     print(f"  {d:<12} {v:>3} votes  ({share:4.1f}%)  "
           f"{len(hit)} of {len(team)} castaways voted against")
 if unattributed_total:
     print(f"  {'unattributed':<12} {unattributed_total:>3} votes  "
-          f"({100 * unattributed_total / TOTAL_BALLOTS:4.1f}%)")
+          f"({100 * unattributed_total / TOTAL_CREDITS:4.1f}%)")
 
 print("\nVotes received, by castaway")
 print("-" * 72)
@@ -349,8 +465,10 @@ print(f"Drafters with ZERO votes against their team: {zero}")
 survivors_voted = sorted(
     ((v, n) for n, v in received.items() if n not in out_names), reverse=True)
 if survivors_voted:
-    v, n = survivors_voted[0]
-    print(f"Most votes survived: {n} ({owner[n]}) took {v} and stayed")
+    v = survivors_voted[0][0]
+    tops = sorted(n for vv, n in survivors_voted if vv == v)
+    print(f"Most votes survived ({v}): " + ", ".join(
+        f"{n} ({owner[n]})" for n in tops))
 
 multi = {n: [t["ep"] for t in TRIBALS if n in t["votes"]]
          for n in received}

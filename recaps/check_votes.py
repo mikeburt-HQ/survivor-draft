@@ -143,25 +143,39 @@ for t in TRIBALS:
         received[n] = received.get(n, 0) + v
 
 owner = {n: d for d, picks in vh.DRAFT.items() for n in picks}
+owner.update({n: "Undrafted" for n in vh.UNDRAFTED})
 attributed = sum(received.values())
 unattributed = sum(t.get("unattributed", 0) for t in TRIBALS)
+# CREDITS: names on parchments (a pair ballot names two). BALLOTS: parchments.
+# They are the same number until the first pair vote in episode 8.
 total = attributed + unattributed
+ballots_total = sum(vh.ballots_of(t) for t in TRIBALS)
 
 by_drafter = {d: 0 for d in vh.DRAFT}
+undrafted_votes = 0
 for n, v in received.items():
-    by_drafter[owner[n]] += v
-assert sum(by_drafter.values()) + unattributed == total
+    if owner[n] == "Undrafted":
+        undrafted_votes += v
+    else:
+        by_drafter[owner[n]] += v
+assert sum(by_drafter.values()) + undrafted_votes + unattributed == total
 
-out_names = {t.get("out") or max(t["votes"], key=t["votes"].get)
-             for t in TRIBALS}
-top = max(list(by_drafter.values()) + [unattributed])
+out_names = {n for t in TRIBALS for n in vh.outs_of(t)}
+top = max(list(by_drafter.values()) + [unattributed, undrafted_votes])
 zero = [d for d, v in by_drafter.items() if v == 0]
-clean_total = len([n for n in owner if not received.get(n)]) + len(vh.UNDRAFTED)
+clean_total = len([n for n in owner if not received.get(n)])
 
 # --- 1. the section note carries the real totals --------------------------
 note = strip_tags(section(START, '<div class="standings">'))
-check(says(note, total, "ballots") or says(note, total, "votes"),
-      f"ledger note should name {total} ballots; reads: {note[:120]}")
+check(says(note, ballots_total, "ballots") or
+      (ballots_total == total and says(note, total, "votes")),
+      f"ledger note should name {ballots_total} ballots; reads: {note[:120]}")
+if total != ballots_total:
+    # Shares are of names, not parchments, so the note must say so or every
+    # percentage below reads as wrong against the ballot count.
+    check(says(note, total, "names"),
+          f"ledger note should also name the {total} names those ballots "
+          f"carry; reads: {note[:160]}")
 check(says(note, len(TRIBALS), "Tribal Councils"),
       f"ledger note should name {len(TRIBALS)} Tribal Councils")
 
@@ -178,12 +192,14 @@ for chunk in stand.split('<div class="row vrow r-')[1:]:
 expect_rows = dict(by_drafter)
 if unattributed:
     expect_rows["unattributed"] = unattributed
+if undrafted_votes:
+    expect_rows["undrafted"] = undrafted_votes
 check(len(rows) == len(expect_rows),
       f"expected {len(expect_rows)} ledger rows, found {len(rows)}")
 
 seen = {}
 for who, body in rows:
-    name = "unattributed" if who == "unattributed" else who.capitalize()
+    name = who if who in ("unattributed", "undrafted") else who.capitalize()
     seen[name] = True
     check(name in expect_rows, f"ledger row '{name}' is not a known row")
     if name not in expect_rows:
@@ -216,7 +232,7 @@ for who, body in rows:
 
 check(set(seen) == set(expect_rows),
       f"rows cover {sorted(seen)}, expected {sorted(expect_rows)}")
-order = [expect_rows.get("unattributed" if w == "unattributed"
+order = [expect_rows.get(w if w in ("unattributed", "undrafted")
                          else w.capitalize(), -1) for w, _ in rows]
 check(order == sorted(order, reverse=True),
       f"ledger rows are not ordered most-voted first: {order}")
@@ -246,7 +262,7 @@ else:
 
 # --- 4. a tribal card per council, with its own tally --------------------
 cards = re.findall(
-    r'<div class="tc (savu|toka|dina)">(.*?)</div>\s*(?=<div class="tc |</div>)',
+    r'<div class="tc (savu|toka|dina|tovuto)">(.*?)</div>\s*(?=<div class="tc |</div>)',
     section('<div class="tribals">'), re.S)
 check(len(cards) == len(TRIBALS),
       f"expected {len(TRIBALS)} tribal cards, found {len(cards)}")
@@ -259,7 +275,7 @@ for (chip, body), t in zip(cards, TRIBALS):
     check(f"<h3>Episode {ep}</h3>" in norm(body),
           f"{where} card is mislabelled")
 
-    ballots = sum(t["votes"].values()) + t.get("unattributed", 0)
+    ballots = vh.ballots_of(t)
     meta = norm(re.search(r'<p class="n">(.*?)</p>', body, re.S).group(1))
     check(tribe in meta, f"{where} meta should name {tribe}: {meta}")
     check(t["_label"] in meta,
@@ -274,6 +290,50 @@ for (chip, body), t in zip(cards, TRIBALS):
 
     lis = re.findall(r'<li( class="boot")?><span class="nm">(.*?)<span>'
                      r'(.*?)</span></span><span class="v">(\d+)</span>', body, re.S)
+
+    if "pairs" in t:
+        # One line per PAIR, carrying that pair's ballots. A cancelled line
+        # must say it was cancelled, and only the pair that left is a boot.
+        branches.append(f"pair-vote ep {ep}")
+        check(len(lis) == len(t["pairs"]),
+              f"{where} card lists {len(lis)} lines, expected one per pair "
+              f"({len(t['pairs'])})")
+        got_pairs = {}
+        for boot, nm, note_txt, v in lis:
+            nm, note_txt = norm(nm), norm(note_txt)
+            members = tuple(x.strip() for x in nm.split(" & "))
+            pair = next((p for p in t["pairs"] if sorted(p) == sorted(members)),
+                        None)
+            check(pair is not None, f"{where} card lists {nm!r}, not a voted pair")
+            if pair is None:
+                continue
+            got_pairs[pair] = int(v)
+            check(int(v) == t["pairs"][pair],
+                  f"{where}: {nm} reads {v}, expected {t['pairs'][pair]}")
+            for n in pair:
+                check(owner[n] in note_txt,
+                      f"{where}: {nm} note '{note_txt}' should name {owner[n]}")
+            is_out = sorted(pair) == sorted(t["out"])
+            check(bool(boot) == is_out,
+                  f"{where}: {nm} boot styling is {bool(boot)}, expected {is_out}")
+            check(("voted out" in note_txt) == is_out,
+                  f"{where}: {nm} note says voted out = "
+                  f"{'voted out' in note_txt}, expected {is_out}")
+            neg = t.get("negated", {}).get(pair, 0)
+            check(("cancelled" in note_txt.lower()) == bool(neg),
+                  f"{where}: {nm} had {neg} cancelled ballots; note reads "
+                  f"'{note_txt}'")
+        check(got_pairs == t["pairs"],
+              f"{where} card pairs {got_pairs} do not match {t['pairs']}")
+        vals = list(got_pairs.values())
+        check(vals == sorted(vals, reverse=True),
+              f"{where} card is not ordered most ballots first: {vals}")
+        for n in t["no_vote"]:
+            check(n.split()[0].strip('"') in strip_tags(body)
+                  or n in strip_tags(body),
+                  f"{where}: {n} forfeited a vote and the card should say so")
+        continue
+
     want_lines = len(t["votes"]) + (1 if t.get("unattributed") else 0)
     check(len(lis) == want_lines,
           f"{where} card lists {len(lis)} lines, expected {want_lines}")
@@ -361,9 +421,19 @@ check(ledger.count('<div class="story">') == 1,
 story = strip_tags(section('<div class="story">', '<div class="kicker">'))
 
 survivors = {n: v for n, v in received.items() if n not in out_names}
-most_survived = max(survivors, key=survivors.get)
-check(most_survived in story,
-      f"prose should name {most_survived} as having survived the most votes")
+best = max(survivors.values())
+most_survived = sorted(n for n, v in survivors.items() if v == best)
+if len(most_survived) == 1:
+    branches.append("one-most-survived")
+else:
+    # A shared record: every holder must be named, and none crowned alone.
+    branches.append(f"shared-most-survived ({len(most_survived)})")
+    check(not re.search(r"survived more votes than anyone", story, re.I),
+          f"{most_survived} share the record on {best}; the prose must not "
+          f"call one of them the outright leader")
+for n in most_survived:
+    check(n in story,
+          f"prose should name {n} as having survived the most votes ({best})")
 
 multi = [n for n in received
          if len([t for t in TRIBALS if n in t["votes"]]) > 1]
@@ -399,6 +469,6 @@ if failures:
 
 print(f"PASS  {args.page} ledger through ep {args.through}: {len(rows)} rows, "
       f"{len(cards)} tribal cards, {len(trs)} castaway rows, "
-      f"{total} ballots reconciled ({attributed} attributed, "
+      f"{ballots_total} ballots / {total} names reconciled ({attributed} attributed, "
       f"{unattributed} not), branches: {', '.join(branches)}, "
       f"no gendered pronouns")

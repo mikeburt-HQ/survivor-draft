@@ -36,6 +36,8 @@ export const TRIBE_COLORS: Record<string, string> = {
   Purple: "#8B5CF6",
   Yellow: "#EAB308",
   Red: "#DC2626",
+  // Tovuto, the merged tribe from episode 7.
+  Blue: "#2563EB",
 };
 
 /** Neutral gray for a castaway with no tribe, or a tribe we have no color for. */
